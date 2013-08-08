@@ -197,6 +197,12 @@ local function getImageUrl(url)
 end
 
 function bindView(Holder, Thing, ListItem)
+	local title = Holder:getView("title")
+	local subtitle = Holder:getView("subtitle")
+	
+	title:setText(Thing:getTitle())
+	subtitle:setText("by " .. Thing:getAuthor() .. " to " .. Thing:getSubreddit())
+
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
 
