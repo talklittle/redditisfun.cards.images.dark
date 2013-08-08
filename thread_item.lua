@@ -137,6 +137,13 @@ function newView(Builder)
 				        view4:setAdjustViewBounds(true)
 				        view4:setScaleType("fitCenter")
 				        view4:setVisibility("invisible")
+				        
+				        local progress = Builder:addProgressBar("image_progress")
+				        progress:setLayoutSize("wrap_content", "wrap_content")
+				        progress:setLayoutMarginBottom("16dp")
+				        progress:setLayoutGravity("center")
+				        progress:setIndeterminate()
+				        progress:setVisibility("gone")
 			        Builder:endFrameLayout()
 		        Builder:endLinearLayout()
 	        Builder:endFrameLayout()
@@ -293,12 +300,14 @@ function bindView(Holder, Thing, ListItem)
 	domain:setText(Thing:isIs_self() and "self" or Thing:getDomain())
 
 	local imageView = Holder:getView("image")
+	local imageProgress = Holder:getView("image_progress")
 
 	local imageUrl = getImageUrl(Thing:getUrl())
 	if imageUrl then
-		imageView:displayImage(imageUrl)
+		imageView:displayImageWithProgress(imageUrl, imageProgress)
 	else
 		imageView:setVisibility("gone")
+		imageProgress:setVisibility("gone")
 	end
 	
     -- votes
