@@ -71,17 +71,20 @@ function newView(Builder)
 	        view3:setText("Subtitle")
 	        view3:setTextColor(TEXT_COLOR_PRIMARY)
 	        view3:setTextSize("14dp")
+	        
 	        local view4 = Builder:addImageView("image")
 	        view4:setLayoutSize("fill_parent", "wrap_content")
 	        view4:setLayoutMarginTop("16dp")
 	        view4:setLayoutMarginBottom("16dp")
+	        view4:setScaleType("fitCenter")
+	        view4:setAdjustViewBounds(true)
 	        local progress = Builder:addProgressBar("image_progress")
 	        progress:setLayoutSize("wrap_content", "wrap_content")
 	        progress:setLayoutMarginTop("16dp")
 	        progress:setLayoutMarginBottom("16dp")
 	        progress:setLayoutGravity("center")
 	        progress:setIndeterminate()
-	        progress:setVisible(false)
+	        progress:setVisibility("gone")
 	    Builder:endLinearLayout()
     Builder:endFrameLayout()
     
@@ -183,12 +186,9 @@ function bindView(Holder, Thing, ListItem)
 
 	local imageUrl = getImageUrl(Thing:getUrl())
 	if imageUrl then
-		imageView:setVisibility("gone")
-		imageProgress:setVisible(true)
 		imageView:displayImageWithProgress(imageUrl, imageProgress)
 	else
-		imageView:setVisibility("invisible")
-		imageProgress:setVisible(false)
+		imageView:displayImageWithProgress(Thing:getThumbnail(), imageProgress)
 	end
 end
 
