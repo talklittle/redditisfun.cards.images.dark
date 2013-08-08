@@ -1,10 +1,10 @@
 {
-    "id": "redditisfun.3.light",
-    "name": "reddit is fun 3.0 light (BETA)",
+    "id": "redditisfun.cards.images.light",
+    "name": "card images light (BETA)",
     
-    "version": 9,
-    "app_version_code": 156,
-    "app_version_name": "3.0.1",
+    "version": 1,
+    "app_version_code": 163,
+    "app_version_name": "3.0.8",
     "api_level": 8,
     
     "android_theme": "Reddit_Light",
