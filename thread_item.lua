@@ -163,18 +163,34 @@ end
 local function getImageUrl(url)
 	local urlLower = url:lower()
 	local last4 = urlLower:sub(-4)
-	if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
-		return url
-	elseif urlLower:sub(-5) == ".jpeg" then
-		return url
-	elseif urlLower:sub(1, 19) == "http://i.imgur.com/" then
-		return "imgur"
+	if urlLower:sub(1, 19) == "http://i.imgur.com/" then
+		if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
+			return url:sub(1, url:len() - 4) .. "l" .. last4
+		else
+			local last5 = urlLower:sub(-5)
+			if last5 == ".jpeg" then
+				return url:sub(1, url:len() - 5) .. "l" .. last5
+			end
+		end
+		return url .. "l.jpg"
 	elseif urlLower:sub(1, 19) == "http://imgur.com/a/" then
 		return nil
 	elseif urlLower:sub(1, 25) == "http://imgur.com/gallery/" then
 		return nil
 	elseif urlLower:sub(1, 17) == "http://imgur.com/" then
-		return url .. ".jpg"
+		if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
+			return url:sub(1, url:len() - 4) .. "l" .. last4
+		else
+			local last5 = urlLower:sub(-5)
+			if last5 == ".jpeg" then
+				return url:sub(1, url:len() - 5) .. "l" .. last5
+			end
+		end
+		return url .. "l.jpg"
+	elseif last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
+		return url
+	elseif urlLower:sub(-5) == ".jpeg" then
+		return url
 	else
 		return nil
 	end
