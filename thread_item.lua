@@ -69,19 +69,18 @@ function newView(Builder)
 	        view3:setLayoutSize("fill_parent", "wrap_content")
 	        view3:setPaddingLeft("16dp")
 	        view3:setPaddingRight("16dp")
+	        view3:setPaddingBottom("16dp")
 	        view3:setText("Subtitle")
 	        view3:setTextColor(TEXT_COLOR_PRIMARY)
 	        view3:setTextSize("14dp")
 	        
 	        local view4 = Builder:addFitWidthImageView("image")
 	        view4:setLayoutSize("fill_parent", "wrap_content")
-	        view4:setLayoutMarginTop("16dp")
-	        view4:setLayoutMarginBottom("0dp")
 	        view4:setAdjustViewBounds(true)
 	        view4:setScaleType("fitCenter")
+	        
 	        local progress = Builder:addProgressBar("image_progress")
 	        progress:setLayoutSize("wrap_content", "wrap_content")
-	        progress:setLayoutMarginTop("16dp")
 	        progress:setLayoutMarginBottom("16dp")
 	        progress:setLayoutGravity("center")
 	        progress:setIndeterminate()
@@ -261,7 +260,8 @@ function bindView(Holder, Thing, ListItem)
 	if imageUrl then
 		imageView:displayImageWithProgress(imageUrl, imageProgress)
 	else
-		imageView:displayImageWithProgress(Thing:getThumbnail(), imageProgress)
+		imageView:setVisibility("gone")
+		imageProgress:setVisibility("gone")
 	end
 end
 
