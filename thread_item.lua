@@ -75,10 +75,12 @@ function newView(Builder)
 	        view4:setLayoutSize("fill_parent", "wrap_content")
 	        view4:setLayoutMarginTop("16dp")
 	        view4:setLayoutMarginBottom("16dp")
-	        local progress = Builder:addImageView("image_progress")
-	        progress:setLayoutSize("fill_parent", "wrap_content")
+	        local progress = Builder:addProgressBar("image_progress")
+	        progress:setLayoutSize("wrap_content", "wrap_content")
 	        progress:setLayoutMarginTop("16dp")
 	        progress:setLayoutMarginBottom("16dp")
+	        progress:setLayoutGravity("center")
+	        progress:setIndeterminate()
 	        progress:setVisible(false)
 	    Builder:endLinearLayout()
     Builder:endFrameLayout()
@@ -153,8 +155,41 @@ local function getImageLabelText(urlLower)
 	end
 end
 
+---
+-- get the label text for image links
+local function getImageUrl(url)
+	local urlLower = url:lower()
+	local last4 = urlLower:sub(-4)
+	if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
+		return url
+	elseif urlLower:sub(-5) == ".jpeg" then
+		return url
+	elseif urlLower:sub(1, 19) == "http://i.imgur.com/" then
+		return "imgur"
+	elseif urlLower:sub(1, 19) == "http://imgur.com/a/" then
+		return nil
+	elseif urlLower:sub(1, 25) == "http://imgur.com/gallery/" then
+		return nil
+	elseif urlLower:sub(1, 17) == "http://imgur.com/" then
+		return url .. ".jpg"
+	else
+		return nil
+	end
+end
+
 function bindView(Holder, Thing, ListItem)
-	-- TODO
+	local imageView = Holder:getView("image")
+	local imageProgress = Holder:getView("image_progress")
+
+	local imageUrl = getImageUrl(Thing:getUrl())
+	if imageUrl then
+		imageView:setVisibility("gone")
+		imageProgress:setVisible(true)
+		imageView:displayImageWithProgress(imageUrl, imageProgress)
+	else
+		imageView:setVisibility("invisible")
+		imageProgress:setVisible(false)
+	end
 end
 
 ---
