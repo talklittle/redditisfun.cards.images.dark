@@ -77,11 +77,11 @@ function newView(Builder)
 			        view2:setTextColor(TEXT_COLOR_PRIMARY)
 			        view2:setTextSize("18sp")
 			        
-			        local votes_comments = Builder:beginLinearLayout("votes_comments")
-			        votes_comments:setLayoutSize("fill_parent", "wrap_content")
-			        votes_comments:setLayoutMarginLeft("16dp")
-			        votes_comments:setLayoutMarginRight("16dp")
-			        votes_comments:setOrientation("horizontal")
+			        local subtitle_row = Builder:beginLinearLayout("subtitle_row")
+			        subtitle_row:setLayoutSize("fill_parent", "wrap_content")
+			        subtitle_row:setLayoutMarginLeft("16dp")
+			        subtitle_row:setLayoutMarginBottom("16dp")
+			        subtitle_row:setOrientation("horizontal")
 
 				        local votes = Builder:addTextView("votes")
 				        votes:setLayoutSize("wrap_content", "wrap_content")
@@ -101,17 +101,21 @@ function newView(Builder)
 				        num_comments:setTextColor(TEXT_COLOR_PRIMARY)
 				        num_comments:setTextSize("14sp")
 				        
+				        local spacer = Builder:addView("spacer")
+				        spacer:setLayoutSize("0dp", "wrap_content")
+				        spacer:setLayoutWeight(1.0)
+				        
+				        local view3 = Builder:addTextView("subreddit")
+				        view3:setLayoutSize("wrap_content", "wrap_content")
+				        view3:setBackground("#eeeeee")
+				        view3:setText("aww")
+				        view3:setTextColor(TEXT_COLOR_PRIMARY)
+				        view3:setTextSize("14sp")
+				        view3:setPaddingLeft("4dp")
+				        view3:setPaddingRight("4dp")
+			        
 			        Builder:endLinearLayout()
 
-			        local view3 = Builder:addTextView("author_subreddit")
-			        view3:setLayoutSize("fill_parent", "wrap_content")
-			        view3:setPaddingLeft("16dp")
-			        view3:setPaddingRight("16dp")
-			        view3:setPaddingBottom("16dp")
-			        view3:setText("Subtitle")
-			        view3:setTextColor(TEXT_COLOR_PRIMARY)
-			        view3:setTextSize("14sp")
-			        
 			        local image_frame = Builder:beginFrameLayout("image_frame")
 			        image_frame:setLayoutSize("fill_parent", "wrap_content")
 				        local view4 = Builder:addFitWidthImageView("image")
@@ -260,7 +264,7 @@ end
 
 function bindView(Holder, Thing, ListItem)
 	local title = Holder:getView("title")
-	local author_subreddit = Holder:getView("author_subreddit")
+	local subreddit = Holder:getView("subreddit")
     local voteUpButton = Holder:getView("vote_up_button")
     local voteDownButton = Holder:getView("vote_down_button")
     local clickThreadView = Holder:getView("click_thread_frame")
@@ -278,7 +282,7 @@ function bindView(Holder, Thing, ListItem)
 --    Holder:getView("comments"):setClickData(Thing)
 	
 	title:setText(Thing:getTitle())
-	author_subreddit:setText("by " .. Thing:getAuthor() .. " to " .. Thing:getSubreddit())
+	subreddit:setText(Thing:getSubreddit())
 
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
@@ -313,174 +317,3 @@ function bindView(Holder, Thing, ListItem)
 	-- num comments
 	numComments:setText(string.format(Thing:getNum_comments()==1 and "%d comment" or "%d comments", Thing:getNum_comments()))
 end
-
----
--- @usage exported
-function oldbindView(Holder, Thing, ListItem)
-    -- set click data for clickable elements that delegate to Java
-    Holder:getView("vote_up_button"):setClickData(Thing)
-    Holder:getView("vote_down_button"):setClickData(Thing)
-    Holder:getView("thread_info_layout"):setClickData(Thing)
-    local thumbnail_frame = Holder:getView("thumbnail_frame")
-    thumbnail_frame:setClickData(Thing)
-    Holder:getView("share"):setClickData(Thing)
-    Holder:getView("save"):setClickData(Thing)
-    Holder:getView("hide"):setClickData(Thing)
-    Holder:getView("more_actions"):setClickData(Thing)
-    Holder:getView("comments"):setClickData(Thing)
-    
-    bindTitleAndDomain(Holder:getView("title"), Thing)
-    
-    -- votes
-    local votes = Holder:getView("votes")
-    local upArrow = Holder:getView("vote_up_image")
-    local downArrow = Holder:getView("vote_down_image")
-    votes:setText(tostring(Thing:getScore()))
-    if Thing:getLikes() == true then
-    	local colorArrowRed = "#ffff8b60"
-    	votes:setTextColor(colorArrowRed)
-    	upArrow:setDrawable(DRAWABLE_VOTE_UP_RED)
-    	downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
-	elseif Thing:getLikes() == false then
-		local colorArrowBlue = "#ff9494ff"
-		votes:setTextColor(colorArrowBlue)
-		upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
-		downArrow:setDrawable(DRAWABLE_VOTE_DOWN_BLUE)
-	else -- Thing:getLikes() == nil
-		local colorArrowGray = "#ffc0c0c0"
-		votes:setTextColor(colorArrowGray)
-	    upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
-	    downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
-	end
-	
-	local num_reports = Holder:getView("num_reports")
-	local hasReports = Thing:getNum_reports() ~= nil and Thing:getNum_reports() > 0
-	num_reports:setVisible(hasReports)
-	if hasReports then
-		num_reports:setText(string.format(Thing:getNum_reports()==1 and "%d report" or "%d reports", Thing:getNum_reports()))
-	end
-	
-	Holder:getView("nsfw"):setVisible(Thing:isOver_18())
-	Holder:getView("num_comments"):setText(string.format(Thing:getNum_comments()==1 and "%d comment" or "%d comments", Thing:getNum_comments()))
-	Holder:getView("subreddit"):setText(Thing:getSubreddit())
-	Holder:getView("submission_time"):setText(Thing:getCreatedTimeAgo())
-	Holder:getView("submitter"):setText("by "..Thing:getAuthor())
-	Holder:getView("submitter_distinguished_mod"):setVisible(Thing:isModerator())
-	Holder:getView("submitter_distinguished_admin"):setVisible(Thing:isAdmin())
-	Holder:getView("submitter_distinguished_special"):setVisible(Thing:isSpecialAdmin())
-	
-	-- thumbnail
-	local thumbnail = Holder:getView("thumbnail_image")
-	local thumbnail_icon_frame = Holder:getView("thumbnail_icon_frame")
-	local thumbnail_icon = Holder:getView("thumbnail_icon")
-	local thumbnail_icon_label = Holder:getView("thumbnail_icon_label")
-	local thumbnail_progress = Holder:getView("thumbnail_progress")
-	local defaultThumbnail = getDefaultThumbnail(Thing:getThumbnail())
-	if defaultThumbnail then
-		thumbnail:setVisibility("visible")
-		thumbnail_icon_frame:setVisibility("gone")
-		thumbnail:setDrawable(defaultThumbnail)
-	elseif Thing:getThumbnail() == "" then
-		if Thing:isIs_self() then
-			thumbnail:setVisibility("visible")
-			thumbnail_icon_frame:setVisibility("gone")
-			thumbnail:setDrawable(DRAWABLE_THUMBNAIL_SELF)
-		else	
-			thumbnail:setVisibility("gone")
-			thumbnail_icon_frame:setVisibility("visible")
-			local urlLower = Thing:getUrl():lower()
-			local imageLabelText = getImageLabelText(urlLower)
-			if imageLabelText then
-				thumbnail_icon:setDrawable(DRAWABLE_IMAGE_LINK)
-				thumbnail_icon_label:setVisibility("visible")
-				thumbnail_icon_label:setText(imageLabelText)
-			else
-				thumbnail_icon:setDrawable(DRAWABLE_WEB_LINK)
-				
-				local isReddit =
-					urlLower:sub(1, 18) == "http://reddit.com/" or
-					urlLower:sub(1, 15) == "http://redd.it/" or
-					urlLower:find("http://[^./]+%.reddit%.com/") ~= nil
-				
-				if isReddit then
-					thumbnail_icon_label:setVisibility("visible")
-					thumbnail_icon_label:setText("reddit")
-				else					
-					thumbnail_icon_label:setVisibility("gone")
-				end
-			end
-		end
-	else
-		thumbnail_icon_frame:setVisibility("gone")
-		-- displayImageWithProgress will handle visibility of thumbnail and thumbnail_progress
-		thumbnail:displayImageWithProgress(Thing:getThumbnail(), thumbnail_progress)
-	end
-	
-	local thread_actions = Holder:getView("thread_actions")
-	
-	thumbnail_frame:setOnClick(function(v)
-		-- hide the actions, then delegate to reddit-is-fun built-in method "clickThumbnail"
-		if shared_state.show_thread_actions then
-			thread_actions:collapseVertical(EXPAND_ANIMATION_DURATION_MILLIS)
-		end
-		shared_state.show_thread_actions = false
-		v:onClick("clickThumbnail")
-		offsetTop(ListItem)
-	end)
-	
-	--
-	-- actions
-	--
-	
-	thread_actions:setVisible(ListItem:isChecked() and shared_state.show_thread_actions)
-	
---	OnClick:setOnClick(Holder:getView("thread_info_layout"), function(v)
-	Holder:getView("thread_info_layout"):setOnClick(function(v)
-		if ListItem:isChecked() then
-			-- keep it checked (like a temp bookmark) but toggle actions visibility
-			shared_state.show_thread_actions = not shared_state.show_thread_actions
-			if shared_state.show_thread_actions then
-				thread_actions:expandVertical(EXPAND_ANIMATION_DURATION_MILLIS)
-			else
-				thread_actions:collapseVertical(EXPAND_ANIMATION_DURATION_MILLIS)
-			end
-		else
-			-- not checked; check it
-			if not shared_state.show_thread_actions then
-				-- show actions. animate only if not already showing on another list item
-				shared_state.show_thread_actions = true
-				thread_actions:expandVertical(EXPAND_ANIMATION_DURATION_MILLIS)
-			else
-				-- if already showing on another list item, skip animation to avoid jarring visual effect
-				thread_actions:expandVertical(0)
-			end
-			ListItem:toggleChecked()
-			offsetTop(ListItem)
-		end
-	end)
-	
-	if ListItem:isChecked() then
-		Holder:getView("root"):setBackground(CHECKED_BGCOLOR)
-		
-		if Thing:isSaved() then
-			Holder:getView("save_image"):setDrawable(DRAWABLE_UNSAVE)
-			Holder:getView("save_text"):setText(UNSAVE_TEXT)
-		else
-			Holder:getView("save_image"):setDrawable(DRAWABLE_SAVE)
-			Holder:getView("save_text"):setText(SAVE_TEXT)
-		end
-		
-		if Thing:isHidden() then
-			Holder:getView("hide_text"):setText(UNHIDE_TEXT)
-		else
-			Holder:getView("hide_text"):setText(HIDE_TEXT)
-		end
-	else
-		if Thing:isClicked() then
-			Holder:getView("root"):setBackground(CLICKED_BGCOLOR)
-		else
-			Holder:getView("root"):setBackground("#ffffff")
-		end
-	end
-end
-
