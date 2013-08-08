@@ -88,6 +88,7 @@ function newView(Builder)
 			        view4:setLayoutSize("fill_parent", "wrap_content")
 			        view4:setAdjustViewBounds(true)
 			        view4:setScaleType("fitCenter")
+			        view4:setVisibility("invisible")
 			        
 			        local progress = Builder:addProgressBar("image_progress")
 			        progress:setLayoutSize("wrap_content", "wrap_content")
