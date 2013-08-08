@@ -25,10 +25,10 @@ local COMMENTS_TEXT = "comments"
 -- drawables
 local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_light.png"
 local DRAWABLE_SAVE = "btn_star_off_normal_holo_light.png"
-local DRAWABLE_VOTE_UP_GRAY = "vote_up_gray.png"
-local DRAWABLE_VOTE_DOWN_GRAY = "vote_down_gray.png"
-local DRAWABLE_VOTE_UP_RED = "vote_up_red.png"
-local DRAWABLE_VOTE_DOWN_BLUE = "vote_down_blue.png"
+local DRAWABLE_VOTE_UP_GRAY = "up_arrow_holo_light.png"
+local DRAWABLE_VOTE_DOWN_GRAY = "down_arrow_holo_light.png"
+local DRAWABLE_VOTE_UP_RED = "up_arrow_red.png"
+local DRAWABLE_VOTE_DOWN_BLUE = "down_arrow_blue.png"
 local DRAWABLE_SHARE = "ic_menu_share_plain_holo_light.png"
 local DRAWABLE_HIDE = "content_remove_holo_light.png"
 local DRAWABLE_MORE = "ic_menu_moreoverflow_normal_holo_light.png"
@@ -62,6 +62,7 @@ function newView(Builder)
 	    	click_thread_frame:setLayoutSize("fill_parent", "wrap_content")
 	    	click_thread_frame:setBackground(ACTIONBAR_ITEM_BACKGROUND)
 	    	click_thread_frame:setClickable(true)
+		    click_thread_frame:setOnClick("clickThumbnail")
 	    	
 			    local click_thread_contents = Builder:beginLinearLayout("click_thread_contents")
 			    click_thread_contents:setLayoutSize("fill_parent", "wrap_content")
@@ -74,15 +75,42 @@ function newView(Builder)
 			        view2:setPaddingRight("16dp")
 			        view2:setText("Title")
 			        view2:setTextColor(TEXT_COLOR_PRIMARY)
-			        view2:setTextSize("18dp")
-			        local view3 = Builder:addTextView("subtitle")
+			        view2:setTextSize("18sp")
+			        
+			        local votes_comments = Builder:beginLinearLayout("votes_comments")
+			        votes_comments:setLayoutSize("fill_parent", "wrap_content")
+			        votes_comments:setLayoutMarginLeft("16dp")
+			        votes_comments:setLayoutMarginRight("16dp")
+			        votes_comments:setOrientation("horizontal")
+
+				        local votes = Builder:addTextView("votes")
+				        votes:setLayoutSize("wrap_content", "wrap_content")
+				        votes:setText("9999 points")
+				        votes:setTextColor(TEXT_COLOR_PRIMARY)
+				        votes:setTextSize("14sp")
+				        
+				        local and_text = Builder:addTextView("and_text")
+				        and_text:setLayoutSize("wrap_content", "wrap_content")
+				        and_text:setText(" and ")
+				        and_text:setTextColor(TEXT_COLOR_PRIMARY)
+				        and_text:setTextSize("14sp")
+				        
+				        local num_comments = Builder:addTextView("num_comments")
+				        num_comments:setLayoutSize("wrap_content", "wrap_content")
+				        num_comments:setText("10000 comments")
+				        num_comments:setTextColor(TEXT_COLOR_PRIMARY)
+				        num_comments:setTextSize("14sp")
+				        
+			        Builder:endLinearLayout()
+
+			        local view3 = Builder:addTextView("author_subreddit")
 			        view3:setLayoutSize("fill_parent", "wrap_content")
 			        view3:setPaddingLeft("16dp")
 			        view3:setPaddingRight("16dp")
 			        view3:setPaddingBottom("16dp")
 			        view3:setText("Subtitle")
 			        view3:setTextColor(TEXT_COLOR_PRIMARY)
-			        view3:setTextSize("14dp")
+			        view3:setTextSize("14sp")
 			        
 			        local image_frame = Builder:beginFrameLayout("image_frame")
 			        image_frame:setLayoutSize("fill_parent", "wrap_content")
@@ -102,6 +130,16 @@ function newView(Builder)
 			        Builder:endFrameLayout()
 		        Builder:endLinearLayout()
 	        Builder:endFrameLayout()
+	        
+--	        local more_info = Builder:beginLinearLayout("more_info")
+--	        more_info:setLayoutSize("fill_parent", "wrap_content")
+--	        more_info:setLayoutMarginLeft("16dp")
+--	        more_info:setLayoutMarginRight("16dp")
+--	        more_info:setOrientation("horizontal")
+--	        	local votes = Builder:addTextView("votes")
+--	        	votes:setLayoutSize("wrap_content", "wrap_content")
+--	        	votes:setTextSize(TEXT_SIZE_SMALL)
+--        	Builder:endLinearLayout()
 	        
 	        local thread_actions = Builder:beginLinearLayout("thread_actions")
 	        thread_actions:setLayoutSize("fill_parent", "wrap_content")
@@ -192,39 +230,6 @@ local function bindTitleAndDomain(textView, Thing)
 	textView:setText(flairBuilder:append(hasFlair and " " or ""):append(titleBuilder):append(" "):append(domainBuilder))
 end
 
-local function getDefaultThumbnail(thumbnailUrl)
-	if not thumbnailUrl then
-		return nil
-	elseif thumbnailUrl:sub(-7) == "default" then
-		return DRAWABLE_THUMBNAIL_DEFAULT
-	elseif thumbnailUrl:sub(-4) == "nsfw" then
-		return DRAWABLE_THUMBNAIL_NSFW
-	elseif thumbnailUrl:sub(-4) == "self" then
-		return DRAWABLE_THUMBNAIL_SELF
-	end
-end
-
----
--- schedules a layout pass to set the vertical offset of the list item
-local function offsetTop(ListItem)
-	ListItem:setTop(ListItem:getTop())
-end
-
----
--- get the label text for image links
-local function getImageLabelText(urlLower)
-	local last4 = urlLower:sub(-4)
-	if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
-		return last4:sub(2)
-	elseif urlLower:sub(-5) == ".jpeg" then
-		return "jpg"
-	elseif urlLower:sub(1, 17) == "http://imgur.com/" or urlLower:sub(1, 19) == "http://i.imgur.com/" then
-		return "imgur"
-	else
-		return nil
-	end
-end
-
 ---
 -- get the label text for image links
 local function getImageUrl(url)
@@ -265,10 +270,25 @@ end
 
 function bindView(Holder, Thing, ListItem)
 	local title = Holder:getView("title")
-	local subtitle = Holder:getView("subtitle")
+	local author_subreddit = Holder:getView("author_subreddit")
+    local voteUpButton = Holder:getView("vote_up_button")
+    local voteDownButton = Holder:getView("vote_down_button")
+    local clickThreadView = Holder:getView("click_thread_frame")
+    local numComments = Holder:getView("num_comments")
+	
+    -- set click data for clickable elements that delegate to Java
+    voteUpButton:setClickData(Thing)
+    voteDownButton:setClickData(Thing)
+    clickThreadView:setClickData(Thing)
+    -- TODO
+--    Holder:getView("share"):setClickData(Thing)
+--    Holder:getView("save"):setClickData(Thing)
+--    Holder:getView("hide"):setClickData(Thing)
+--    Holder:getView("more_actions"):setClickData(Thing)
+--    Holder:getView("comments"):setClickData(Thing)
 	
 	title:setText(Thing:getTitle())
-	subtitle:setText("by " .. Thing:getAuthor() .. " to " .. Thing:getSubreddit())
+	author_subreddit:setText("by " .. Thing:getAuthor() .. " to " .. Thing:getSubreddit())
 
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
@@ -280,6 +300,28 @@ function bindView(Holder, Thing, ListItem)
 		imageView:setVisibility("gone")
 		imageProgress:setVisibility("gone")
 	end
+	
+    -- votes
+    local votes = Holder:getView("votes")
+    votes:setText(string.format(Thing:getScore()==1 and "%d point" or "%d points", Thing:getScore()))
+    if Thing:getLikes() == true then
+    	local colorArrowRed = "#ffff8b60"
+    	votes:setTextColor(colorArrowRed)
+    	voteUpButton:setDrawable(DRAWABLE_VOTE_UP_RED)
+    	voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
+	elseif Thing:getLikes() == false then
+		local colorArrowBlue = "#ff9494ff"
+		votes:setTextColor(colorArrowBlue)
+		voteUpButton:setDrawable(DRAWABLE_VOTE_UP_GRAY)
+		voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_BLUE)
+	else -- Thing:getLikes() == nil
+		votes:setTextColor(TEXT_COLOR_PRIMARY)
+	    voteUpButton:setDrawable(DRAWABLE_VOTE_UP_GRAY)
+	    voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
+	end
+	
+	-- num comments
+	numComments:setText(string.format(Thing:getNum_comments()==1 and "%d comment" or "%d comments", Thing:getNum_comments()))
 end
 
 ---
@@ -303,7 +345,7 @@ function oldbindView(Holder, Thing, ListItem)
     local votes = Holder:getView("votes")
     local upArrow = Holder:getView("vote_up_image")
     local downArrow = Holder:getView("vote_down_image")
-    votes:setText(tostring(Thing:getScore()));
+    votes:setText(tostring(Thing:getScore()))
     if Thing:getLikes() == true then
     	local colorArrowRed = "#ffff8b60"
     	votes:setTextColor(colorArrowRed)
