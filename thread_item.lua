@@ -318,6 +318,7 @@ function bindView(Holder, Thing, ListItem)
 			imageView:setTag("currentUrl", imageUrl)
 		end
 	else
+		imageView:cancelDisplayImage()
 		imageView:setVisibility("gone")
 		imageProgress:setVisibility("gone")
 	end
