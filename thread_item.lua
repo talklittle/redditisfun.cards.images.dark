@@ -313,7 +313,10 @@ function bindView(Holder, Thing, ListItem)
 
 	local imageUrl = getImageUrl(Thing:getUrl())
 	if imageUrl then
-		imageView:displayImageWithProgress(imageUrl, imageProgress)
+		if imageUrl ~= imageView:getTag("currentUrl") then
+			imageView:displayImageWithProgress(imageUrl, imageProgress)
+			imageView:setTag("currentUrl", imageUrl)
+		end
 	else
 		imageView:setVisibility("gone")
 		imageProgress:setVisibility("gone")
