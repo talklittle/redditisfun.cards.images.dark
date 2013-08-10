@@ -321,6 +321,7 @@ function bindView(Holder, Thing, ListItem)
 
 	if Thing:isOver_18() and not ListItem:isBrowsingOver18Subreddit() then
 		nsfw:setVisibility("visible")
+		imageView:cancelDisplayImage()
 		imageView:setVisibility("gone")
 	else
 		nsfw:setVisibility("gone")
