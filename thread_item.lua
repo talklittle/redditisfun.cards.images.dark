@@ -144,6 +144,12 @@ function newView(Builder)
 				        progress:setIndeterminate(true)
 				        progress:setVisibility("gone")
 				        progress:setPaddingBottom("16dp")
+				        
+				        local nsfw = Builder:addImageView("nsfw")
+				        nsfw:setLayoutSize("70dp", "70dp")
+				        nsfw:setLayoutGravity("center")
+				        nsfw:setDrawable(DRAWABLE_THUMBNAIL_NSFW)
+				        nsfw:setScaleType("fitCenter")
 			        Builder:endFrameLayout()
 		        Builder:endLinearLayout()
 	        Builder:endFrameLayout()
@@ -292,6 +298,7 @@ function bindView(Holder, Thing, ListItem)
     local voteUpButton = Holder:getView("vote_up_button")
     local voteDownButton = Holder:getView("vote_down_button")
     local comments = Holder:getView("comments")
+    local nsfw = Holder:getView("nsfw")
 	
     -- set click data for clickable elements that delegate to Java
     voteUpButton:setClickData(Thing)
@@ -312,16 +319,22 @@ function bindView(Holder, Thing, ListItem)
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
 
-	local imageUrl = getImageUrl(Thing:getUrl())
-	if imageUrl then
-		if imageUrl ~= imageView:getTag("currentUrl") then
-			imageView:displayImageWithProgress(imageUrl, imageProgress)
-			imageView:setTag("currentUrl", imageUrl)
-		end
-	else
-		imageView:cancelDisplayImage()
+	if Thing:isOver_18() and not ListItem:isBrowsingOver18Subreddit() then
+		nsfw:setVisibility("visible")
 		imageView:setVisibility("gone")
-		imageProgress:setVisibility("gone")
+	else
+		nsfw:setVisibility("gone")
+		local imageUrl = getImageUrl(Thing:getUrl())
+		if imageUrl then
+			if imageUrl ~= imageView:getTag("currentUrl") then
+				imageView:displayImageWithProgress(imageUrl, imageProgress)
+				imageView:setTag("currentUrl", imageUrl)
+			end
+		else
+			imageView:cancelDisplayImage()
+			imageView:setVisibility("gone")
+			imageProgress:setVisibility("gone")
+		end
 	end
 	
     -- votes
