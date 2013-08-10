@@ -305,6 +305,7 @@ function bindView(Holder, Thing, ListItem)
     Holder:getView("comments"):setClickData(Thing)
 	
 	title:setText(Thing:getTitle())
+	title:setTextStyle(Thing:isClicked() and "normal" or "bold")
 	subreddit:setText(Thing:getSubreddit())
 	domain:setText(Thing:isIs_self() and "self" or Thing:getDomain())
 
