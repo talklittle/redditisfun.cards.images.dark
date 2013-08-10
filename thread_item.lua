@@ -261,7 +261,7 @@ local function getImageUrl(url)
 		end
 		return url .. "l.jpg"
 	elseif urlLower:sub(1, 19) == "http://imgur.com/a/" then
-		return nil
+		return url
 	elseif urlLower:sub(1, 25) == "http://imgur.com/gallery/" then
 		return nil
 	elseif urlLower:sub(1, 17) == "http://imgur.com/" then
