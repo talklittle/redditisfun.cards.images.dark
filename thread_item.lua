@@ -54,7 +54,7 @@ function newView(Builder)
     root:setLayoutSize("fill_parent", "wrap_content")
 	    local view1 = Builder:beginLinearLayout("view1")
 	    view1:setLayoutSize("fill_parent", "wrap_content")
-	    view1:setLayoutMargin("16dp")
+	    view1:setLayoutMargins("16dp", "8dp", "16dp", "8dp")
 	    view1:setOrientation("vertical")
 	    view1:setBackground("#ffffff")
 	    
