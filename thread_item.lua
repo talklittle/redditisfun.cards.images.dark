@@ -314,7 +314,13 @@ function bindView(Holder, Thing, ListItem)
 	title:setText(Thing:getTitle())
 	title:setTextStyle(Thing:isClicked() and "normal" or "bold")
 	subreddit:setText(Thing:getSubreddit())
-	domain:setText(Thing:isIs_self() and "self" or Thing:getDomain())
+	if Thing:isIs_self() then
+		domain:setText("self")
+	elseif Thing:getUrl():sub(1, 19) == "http://imgur.com/a/" then
+		domain:setText("imgur album")
+	else
+		domain:setText(Thing:getDomain())
+	end
 
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
