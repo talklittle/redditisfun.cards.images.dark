@@ -9,19 +9,6 @@ local Fonts = redditisfun.Fonts
 local Spans = redditisfun.Spans
 local Toasts = redditisfun.Toasts
 
-local shared_state = {}
--- shared state because if the list item scrolls out of view, and you bindView again, it would reset state
-shared_state.show_thread_actions = false
-
--- action strings
-local SHARE_TEXT = "share"
-local SAVE_TEXT = "save"
-local UNSAVE_TEXT = "unsave"
-local HIDE_TEXT = "hide"
-local UNHIDE_TEXT = "unhide"
-local MORE_TEXT = "more"
-local COMMENTS_TEXT = "comments"
-
 -- drawables
 local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_light.png"
 local DRAWABLE_SAVE = "btn_star_off_normal_holo_light.png"
@@ -183,22 +170,22 @@ function newView(Builder)
 	            more_actions:setLayoutSize("0dp", "48dp")
 	            more_actions:setLayoutWeight(1.000000)
 	            more_actions:setBackground(ACTIONBAR_ITEM_BACKGROUND)
-	            more_actions:setOnClick("moreActionsComment")
+	            more_actions:setOnClick("moreActionsThread")
 	            more_actions:setOnLongClick(function(v) Toasts:showHintShort("More actions", v) end)
 	            more_actions:setDrawable("ic_menu_moreoverflow_normal_holo_light.png")
 		        more_actions:setPaddingTop("8dp")
 		        more_actions:setPaddingBottom("8dp")
 	            more_actions:setScaleType("fitCenter")
-	            local permalink = Builder:addImageButton("permalink")
-	            permalink:setLayoutSize("0dp", "48dp")
-	            permalink:setLayoutWeight(1.000000)
-	            permalink:setBackground(ACTIONBAR_ITEM_BACKGROUND)
-	            permalink:setOnClick("permalinkComment")
-	            permalink:setOnLongClick(function(v) Toasts:showHintShort("Permalink", v) end)
-	            permalink:setDrawable("ic_menu_share_plain_holo_light.png")
-		        permalink:setPaddingTop("8dp")
-		        permalink:setPaddingBottom("8dp")
-	            permalink:setScaleType("fitCenter")
+	            local share = Builder:addImageButton("share")
+	            share:setLayoutSize("0dp", "48dp")
+	            share:setLayoutWeight(1.000000)
+	            share:setBackground(ACTIONBAR_ITEM_BACKGROUND)
+	            share:setOnClick("shareThread")
+	            share:setOnLongClick(function(v) Toasts:showHintShort("Share", v) end)
+	            share:setDrawable("ic_menu_share_plain_holo_light.png")
+		        share:setPaddingTop("8dp")
+		        share:setPaddingBottom("8dp")
+	            share:setScaleType("fitCenter")
 	            local comments = Builder:addImageButton("comments")
 	            comments:setLayoutSize("0dp", "48dp")
 	            comments:setLayoutWeight(1.000000)
@@ -299,16 +286,18 @@ function bindView(Holder, Thing, ListItem)
     local voteDownButton = Holder:getView("vote_down_button")
     local comments = Holder:getView("comments")
     local nsfw = Holder:getView("nsfw")
+    local share = Holder:getView("share")
+    local moreActions = Holder:getView("more_actions")
 	
     -- set click data for clickable elements that delegate to Java
     voteUpButton:setClickData(Thing)
     voteDownButton:setClickData(Thing)
     clickThreadView:setClickData(Thing)
+    share:setClickData(Thing)
+    moreActions:setClickData(Thing)
     -- TODO
---    Holder:getView("share"):setClickData(Thing)
 --    Holder:getView("save"):setClickData(Thing)
 --    Holder:getView("hide"):setClickData(Thing)
---    Holder:getView("more_actions"):setClickData(Thing)
     Holder:getView("comments"):setClickData(Thing)
 	
 	title:setText(Thing:getTitle())
