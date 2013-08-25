@@ -388,6 +388,8 @@ end
 
 ---
 -- @usage exported
-function onDismiss(Thing)
-	-- TODO
+function onDismiss(Holder, Thing)
+	local backview = Holder:getView("swipelist_backview")
+	backview:setClickData(Thing)
+	backview:onClick("hideThread")
 end
