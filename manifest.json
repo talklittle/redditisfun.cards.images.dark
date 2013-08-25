@@ -9,11 +9,18 @@
     
     "android_theme": "Reddit_Light",
     
+    "swipe_list": {
+    	"swipe_action_left": "SWIPE_ACTION_DISMISS",
+    	"swipe_action_right": "SWIPE_ACTION_DISMISS"
+    },
+    
     "scripts": {
         "posts_thread": {
             "file": "thread_item.lua",
             "new_view": "newView",
-            "bind_view": "bindView"
+            "bind_view": "bindView",
+            "swipe_on_change_swipe_mode": "onChangeSwipeMode",
+            "swipe_on_dismiss": "onDismiss"
         },
         "posts_comment": {
             "file": "profile_comment_item.lua",

@@ -8,6 +8,7 @@ local ACTIONBAR_ITEM_BACKGROUND = redditisfun.ACTIONBAR_ITEM_BACKGROUND
 local Fonts = redditisfun.Fonts
 local Spans = redditisfun.Spans
 local Toasts = redditisfun.Toasts
+local SWIPE_MODE_BOTH = redditisfun.SWIPE_MODE_BOTH
 
 -- drawables
 local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_light.png"
@@ -373,4 +374,16 @@ function bindView(Holder, Thing, ListItem)
 	else
 		save:setDrawable(DRAWABLE_SAVE)
 	end
+end
+
+---
+-- @usage exported
+function onChangeSwipeMode(Thing)
+	return SWIPE_MODE_BOTH
+end
+
+---
+-- @usage exported
+function onDismiss(Thing)
+	-- TODO
 end
