@@ -43,11 +43,12 @@ function newView(Builder)
     	local backview = Builder:beginFrameLayout("swipelist_backview")
     	backview:setLayoutSize("fill_parent", "wrap_content")
     	Builder:endFrameLayout()
-    	
+    
 	    local view1 = Builder:beginLinearLayout("swipelist_frontview")
 	    view1:setLayoutSize("fill_parent", "wrap_content")
 	    view1:setLayoutMargins("16dp", "8dp", "16dp", "8dp")
 	    view1:setOrientation("vertical")
+	    view1:setBackground("cardborder.9.png")
 	    view1:setPadding("1")
 	    
 	    	local click_thread_frame = Builder:beginFrameLayout("click_thread_frame")
@@ -215,15 +216,6 @@ function newView(Builder)
 	        Builder:endViewGroup()
 	        
     	Builder:endLinearLayout()
-    	
-    	local frontview_bg = Builder:addImageView("frontview_bg")
-    	frontview_bg:setLayoutSize("fill_parent", "fill_parent")
-	    frontview_bg:setLayoutMargins("16dp", "8dp", "16dp", "8dp")
-    	frontview_bg:setBackground(nil)
-    	frontview_bg:setDrawable("cardborder.9.png")
-    	frontview_bg:setScaleType("fitXY")
-    	frontview_bg:setPadding("0dp")
-    
     Builder:endFrameLayout()
     
     Fonts:registerNormal("Roboto", "fonts/Roboto-Regular.ttf")
