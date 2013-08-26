@@ -128,6 +128,7 @@ function newView(Builder)
 				        view4:setLayoutSize("fill_parent", "wrap_content")
 				        view4:setLayoutGravity("center")
 				        view4:setAdjustViewBounds(true)
+				        view4:setMaxHeight("1280dp")
 				        view4:setScaleType("fitCenter")
 				        view4:setVisibility("invisible")
 				        
