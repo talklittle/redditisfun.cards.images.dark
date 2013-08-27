@@ -27,10 +27,6 @@ local DRAWABLE_THUMBNAIL_SELF = "thumbnail_self.png"
 local DRAWABLE_IMAGE_LINK = "content_picture_holo_light.png"
 local DRAWABLE_WEB_LINK = "location_web_site_holo_light.png"
 
--- http://colllor.com/33b5e5
-local CHECKED_BGCOLOR = "#DBF2FA"
-local ACTIONS_BGCOLOR = "#B7E5F6"
-
 local CLICKED_BGCOLOR = "#EBEBEB"
 --local THUMBNAIL_BGCOLOR = "#DEDEDE"
 local THUMBNAIL_BGCOLOR = ""
