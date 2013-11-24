@@ -291,9 +291,7 @@ function bindView(Holder, Thing, ListItem)
 	
 	title:setText(Thing:getTitle())
 	title:setTextStyle(Thing:isClicked() and "normal" or "bold")
-    if Thing:isStickied() then
-        title:setTextColor("#669900");
-    end
+    title:setTextColor(Thing:isStickied() and "#669900" or TEXT_COLOR_PRIMARY)
 
 	subreddit:setText(Thing:getSubreddit())
 	if Thing:isIs_self() then
