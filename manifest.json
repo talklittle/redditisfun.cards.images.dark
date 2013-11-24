@@ -8,6 +8,8 @@
     "api_level": 8,
     
     "android_theme": "Reddit_Light",
+
+    "ad_placement": "bottom",
     
     "swipe_list": {
     	"swipe_action_left": "SWIPE_ACTION_DISMISS",
