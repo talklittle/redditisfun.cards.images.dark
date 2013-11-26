@@ -3,8 +3,8 @@
     "name": "cards 1-column light (BETA)",
     
     "version": 1,
-    "app_version_code": 165,
-    "app_version_name": "3.1.0",
+    "app_version_code": 167,
+    "app_version_name": "3.1.0-alpha1",
     "api_level": 8,
     
     "android_theme": "Reddit_Light",
