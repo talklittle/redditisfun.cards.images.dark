@@ -292,6 +292,7 @@ function bindViewMessage(Holder, Thing, ListItem)
     Holder:getView("vote_down_button"):setVisible(false)
     
 	-- collapse: only mod mail with replies
+    local subreddit = Thing:getSubreddit()
 	local collapseView = Holder:getView("collapse")
 	collapseView:setVisible(Thing:getReplies() ~= nil and subreddit ~= nil and subreddit ~= "");
 	
