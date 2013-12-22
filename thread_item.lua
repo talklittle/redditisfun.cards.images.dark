@@ -11,21 +11,21 @@ local Toasts = redditisfun.Toasts
 local SWIPE_MODE_BOTH = redditisfun.SWIPE_MODE_BOTH
 
 -- drawables
-local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_light.png"
-local DRAWABLE_SAVE = "btn_star_off_normal_holo_light.png"
-local DRAWABLE_VOTE_UP_GRAY = "up_arrow_holo_light.png"
-local DRAWABLE_VOTE_DOWN_GRAY = "down_arrow_holo_light.png"
+local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_dark.png"
+local DRAWABLE_SAVE = "btn_star_off_normal_holo_dark.png"
+local DRAWABLE_VOTE_UP_GRAY = "up_arrow_holo_dark.png"
+local DRAWABLE_VOTE_DOWN_GRAY = "down_arrow_holo_dark.png"
 local DRAWABLE_VOTE_UP_RED = "up_arrow_red.png"
 local DRAWABLE_VOTE_DOWN_BLUE = "down_arrow_blue.png"
-local DRAWABLE_SHARE = "ic_menu_share_plain_holo_light.png"
-local DRAWABLE_HIDE = "content_remove_holo_light.png"
-local DRAWABLE_MORE = "ic_menu_moreoverflow_normal_holo_light.png"
-local DRAWABLE_COMMENTS = "social_chat_holo_light.png"
+local DRAWABLE_SHARE = "ic_menu_share_plain_holo_dark.png"
+local DRAWABLE_HIDE = "content_remove_holo_dark.png"
+local DRAWABLE_MORE = "ic_menu_moreoverflow_normal_holo_dark.png"
+local DRAWABLE_COMMENTS = "social_chat_holo_dark.png"
 local DRAWABLE_THUMBNAIL_DEFAULT = "thumbnail_default.png"
 local DRAWABLE_THUMBNAIL_NSFW = "thumbnail_nsfw.png"
 local DRAWABLE_THUMBNAIL_SELF = "thumbnail_self.png"
-local DRAWABLE_IMAGE_LINK = "content_picture_holo_light.png"
-local DRAWABLE_WEB_LINK = "location_web_site_holo_light.png"
+local DRAWABLE_IMAGE_LINK = "content_picture_holo_dark.png"
+local DRAWABLE_WEB_LINK = "location_web_site_holo_dark.png"
 
 local CLICKED_BGCOLOR = "#EBEBEB"
 --local THUMBNAIL_BGCOLOR = "#DEDEDE"
@@ -161,7 +161,7 @@ function newView(Builder)
                     vote_up_button:setPaddingBottom("8dp")
 		            vote_up_button:setOnClick("voteUp")
 		            vote_up_button:setOnLongClick(function(v) Toasts:showHintShort("Upvote", v) end)
-		            vote_up_button:setDrawable("up_arrow_holo_light.png")
+		            vote_up_button:setDrawable("up_arrow_holo_dark.png")
 		            vote_up_button:setScaleType("fitCenter")
 		            local vote_down_button = Builder:addImageButton("vote_down_button")
 		            vote_down_button:setLayoutSize("0dp", "48dp")
@@ -171,7 +171,7 @@ function newView(Builder)
                     vote_down_button:setPaddingBottom("8dp")
 		            vote_down_button:setOnClick("voteDown")
 		            vote_down_button:setOnLongClick(function(v) Toasts:showHintShort("Downvote", v) end)
-		            vote_down_button:setDrawable("down_arrow_holo_light.png")
+		            vote_down_button:setDrawable("down_arrow_holo_dark.png")
 		            vote_down_button:setScaleType("fitCenter")
 		            local share = Builder:addImageButton("share")
 		            share:setLayoutSize("0dp", "48dp")
@@ -181,7 +181,7 @@ function newView(Builder)
                     share:setPaddingBottom("8dp")
 		            share:setOnClick("shareThread")
 		            share:setOnLongClick(function(v) Toasts:showHintShort("Share", v) end)
-		            share:setDrawable("ic_menu_share_plain_holo_light.png")
+		            share:setDrawable("ic_menu_share_plain_holo_dark.png")
 		            share:setScaleType("fitCenter")
 		            local save = Builder:addImageButton("save")
 		            save:setLayoutSize("0dp", "48dp")
@@ -201,7 +201,7 @@ function newView(Builder)
                     comments:setPaddingBottom("8dp")
 		            comments:setOnClick("openComments")
 		            comments:setOnLongClick(function(v) Toasts:showHintShort("Comments", v) end)
-		            comments:setDrawable("social_chat_holo_light.png")
+		            comments:setDrawable("social_chat_holo_dark.png")
 		            comments:setScaleType("fitCenter")
 		            local more_actions = Builder:addImageButton("more_actions")
                     more_actions:setLayoutSize("0dp", "48dp")
@@ -211,7 +211,7 @@ function newView(Builder)
                     more_actions:setPaddingBottom("8dp")
 		            more_actions:setOnClick("moreActionsThread")
 		            more_actions:setOnLongClick(function(v) Toasts:showHintShort("More actions", v) end)
-		            more_actions:setDrawable("ic_menu_moreoverflow_normal_holo_light.png")
+		            more_actions:setDrawable("ic_menu_moreoverflow_normal_holo_dark.png")
 		            more_actions:setScaleType("centerCrop")
 		        Builder:endViewGroup()
 		        
