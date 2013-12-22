@@ -1,13 +1,13 @@
 {
-    "id": "redditisfun.cards.images.light",
-    "name": "cards 1-column light (ALPHA)",
+    "id": "redditisfun.cards.images.dark",
+    "name": "cards 1-column dark (ALPHA)",
     
-    "version": 2,
-    "app_version_code": 170,
-    "app_version_name": "3.1.0-alpha4",
+    "version": 1,
+    "app_version_code": 171,
+    "app_version_name": "3.1.0-beta1",
     "api_level": 8,
     
-    "android_theme": "Reddit_Light",
+    "android_theme": "Reddit_Dark",
 
     "ad_placement": "bottom",
     
