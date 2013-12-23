@@ -1,4 +1,5 @@
-local commentmodule      = require "commentmodule"
+local commentmodule = require "commentmodule"
+local palette = require "palette"
 
 -- local aliases for globals
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
@@ -7,7 +8,7 @@ local TEXT_SIZE_SMALL = redditisfun.TEXT_SIZE_SMALL
 
 local TEXT_COLOR_SECONDARY     = redditisfun.TEXT_COLOR_SECONDARY
 local TEXT_COLOR_SUBMITTER     = "#888888"
-local TEXT_COLOR_OP            = "#ff0000ff"
+local TEXT_COLOR_OP            = palette.TEXT_COLOR_OP
 local TEXT_COLOR_MODERATOR     = "#ff228822"
 local TEXT_COLOR_ADMIN         = "#ffff0011"
 local TEXT_COLOR_SPECIAL_ADMIN = "#BE1337"

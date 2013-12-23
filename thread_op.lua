@@ -1,4 +1,5 @@
 local commentmodule = require "commentmodule"
+local palette = require "palette"
 
 -- local aliases for globals
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
@@ -233,7 +234,7 @@ end
 local function bindTitleAndDomain(textView, Thing)
 	local flairBackgroundColor = "#dddddd"
 	local flairSize = TEXT_SIZE_SMALL
-    local titleColor = (Thing:isStickied() and "#669900" or (Thing:isClicked() and "#551a8b" or "#0000ff"))
+    local titleColor = (Thing:isStickied() and "#669900" or (Thing:isClicked() and palette.TEXT_COLOR_TITLE_CLICKED or palette.TEXT_COLOR_TITLE_UNCLICKED))
     local titleStyle = ((Thing:isClicked() and not Thing:isStickied()) and "normal" or "bold")
 	local domainColor = "#7f7f7f"
 	local domainSize = TEXT_SIZE_SMALL
