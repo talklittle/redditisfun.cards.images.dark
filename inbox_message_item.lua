@@ -107,7 +107,7 @@ function newView(Builder)
                     body:setOnClick("onListItemClick")
 					body:setClickable(true)
 					body:setTextSize(TEXT_SIZE_BODY)
-					body:setTextColor("#000000")
+					body:setTextColor(TEXT_COLOR_PRIMARY)
 					body:setLinksClickable(true)
                 Builder:endLinearLayout()
                 

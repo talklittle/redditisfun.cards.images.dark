@@ -267,7 +267,6 @@ function newView(Builder)
 end
 
 local function bindTitleAndDomain(textView, Thing)
---    local titleColor = (Thing:isClicked() and "#333333" or "#000000")
     local titleColor = (Thing:isClicked() and "#551a8b" or "#0000ff")
 	local titleStyle = (Thing:isClicked() and "normal" or "bold")
 	local domainColor = "#7f7f7f"

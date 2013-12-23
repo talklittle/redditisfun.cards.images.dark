@@ -5,6 +5,7 @@ local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
 local TEXT_SIZE_MEDIUM = redditisfun.TEXT_SIZE_MEDIUM
 local TEXT_SIZE_SMALL = redditisfun.TEXT_SIZE_SMALL
 
+local TEXT_COLOR_PRIMARY       = redditisfun.TEXT_COLOR_PRIMARY
 local TEXT_COLOR_SECONDARY     = redditisfun.TEXT_COLOR_SECONDARY
 local TEXT_COLOR_SUBMITTER     = "#888888"
 local TEXT_COLOR_OP            = "#ff0000ff"
@@ -97,7 +98,7 @@ function newView(Builder)
 	        body:setOnClick("onListItemClick")
 	        body:setClickable(true)
 	        body:setTextSize(TEXT_SIZE_BODY)
-	        body:setTextColor("#000000")
+	        body:setTextColor(TEXT_COLOR_PRIMARY)
 	        body:setLinksClickable(true)
 	
 	        local comment_actions = Builder:beginLinearLayout("comment_actions")
