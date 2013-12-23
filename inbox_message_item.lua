@@ -1,3 +1,6 @@
+local commentmodule = require "commentmodule"
+local palette = require "palette"
+
 -- local aliases for globals
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
 local TEXT_SIZE_MEDIUM = redditisfun.TEXT_SIZE_MEDIUM
@@ -13,31 +16,15 @@ local TEXT_SIZE_BODY = TEXT_SIZE_SMALL * 1.1
 local TEXT_COLOR_NEW = "#ff0000"
 local TEXT_COLOR_OLD = TEXT_COLOR_PRIMARY
 
--- http://colllor.com/33b5e5
-local CHECKED_BGCOLOR = "#DBF2FA"
-
 ---
 -- @usage exported
 function newView(Builder)
     local view1 = Builder:beginLinearLayout("view1")
     view1:setLayoutSize("fill_parent", "wrap_content")
     view1:setOrientation("horizontal")
-		local function addIndent(viewId)
-			local left_indent = Builder:addView(viewId)
-			left_indent:setLayoutSize("1dp", "fill_parent")
-			left_indent:setLayoutMarginLeft("5dp")
-			left_indent:setLayoutMarginRight("4dp")
-			left_indent:setBackground("#ffdfdfdf")
-		end
-		
-		addIndent("left_indent1")
-		addIndent("left_indent2")
-		addIndent("left_indent3")
-		addIndent("left_indent4")
-		addIndent("left_indent5")
-		addIndent("left_indent6")
-		addIndent("left_indent7")
-		addIndent("left_indent8")
+        for i = 1,8 do
+            commentmodule.addIndent(Builder, "left_indent"..i)
+        end
         
         local view2 = Builder:beginLinearLayout("view2")
         view2:setLayoutSize("fill_parent", "wrap_content")
@@ -199,7 +186,7 @@ end
 
 local function bindViewCommon(Holder, Thing, ListItem)
 	local rootContainer = Holder:getView("view1")
-	rootContainer:setBackground(ListItem:isChecked() and CHECKED_BGCOLOR or SELECTABLE_ITEM_BACKGROUND)
+	rootContainer:setBackground(ListItem:isChecked() and palette.CHECKED_BGCOLOR or SELECTABLE_ITEM_BACKGROUND)
 	
 	-- indentation
 	for i = 1,8 do

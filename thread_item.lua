@@ -27,10 +27,6 @@ local DRAWABLE_THUMBNAIL_SELF = "thumbnail_self.png"
 local DRAWABLE_IMAGE_LINK = "content_picture_holo_dark.png"
 local DRAWABLE_WEB_LINK = "location_web_site_holo_dark.png"
 
-local CLICKED_BGCOLOR = "#EBEBEB"
---local THUMBNAIL_BGCOLOR = "#DEDEDE"
-local THUMBNAIL_BGCOLOR = ""
-
 ---
 -- @usage exported
 function newView(Builder)

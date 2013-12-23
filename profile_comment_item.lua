@@ -16,9 +16,6 @@ local TEXT_COLOR_SPECIAL_ADMIN = "#BE1337"
 
 local TEXT_SIZE_BODY = TEXT_SIZE_SMALL * 1.1
 
--- http://colllor.com/33b5e5
-local CHECKED_BGCOLOR = "#DBF2FA"
-
 local SELECTABLE_ITEM_BACKGROUND = redditisfun.SELECTABLE_ITEM_BACKGROUND
 local Fonts = redditisfun.Fonts
 local Toasts = redditisfun.Toasts
@@ -176,7 +173,7 @@ end
 -- @usage exported
 function bindView(Holder, Thing, ListItem)
 	local rootContainer = Holder:getView("root_container")
-	rootContainer:setBackground(ListItem:isChecked() and CHECKED_BGCOLOR or SELECTABLE_ITEM_BACKGROUND)
+	rootContainer:setBackground(ListItem:isChecked() and palette.CHECKED_BGCOLOR or SELECTABLE_ITEM_BACKGROUND)
 	
 	local voteUpButton = Holder:getView("vote_up_button")
 	local voteDownButton = Holder:getView("vote_down_button")

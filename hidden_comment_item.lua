@@ -15,9 +15,6 @@ local TEXT_COLOR_SPECIAL_ADMIN = "#BE1337"
 
 local TEXT_SIZE_BODY = TEXT_SIZE_SMALL * 1.1
 
--- http://colllor.com/33b5e5
-local CHECKED_BGCOLOR = "#DBF2FA"
-
 local SELECTABLE_ITEM_BACKGROUND = redditisfun.SELECTABLE_ITEM_BACKGROUND
 local Fonts = redditisfun.Fonts
 local Toasts = redditisfun.Toasts

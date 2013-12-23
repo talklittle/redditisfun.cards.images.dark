@@ -41,8 +41,7 @@ local DRAWABLE_IMAGE_LINK = "content_picture_holo_dark.png"
 local DRAWABLE_WEB_LINK = "location_web_site_holo_dark.png"
 
 -- http://colllor.com/33b5e5
-local CHECKED_BGCOLOR = "#DBF2FA"
-local ACTIONS_BGCOLOR = "#B7E5F6"
+local ACTIONS_BGCOLOR = "#0E536C"
 
 --local THUMBNAIL_BGCOLOR = "#DEDEDE"
 local THUMBNAIL_BGCOLOR = ""
@@ -441,7 +440,7 @@ function bindView(Holder, Thing, ListItem)
 	end)
 	
 	if ListItem:isChecked() then
-		Holder:getView("root"):setBackground(CHECKED_BGCOLOR)
+		Holder:getView("root"):setBackground(palette.CHECKED_BGCOLOR)
 		
 		if Thing:isSaved() then
 			Holder:getView("save_image"):setDrawable(DRAWABLE_UNSAVE)
