@@ -1,3 +1,5 @@
+local commentmodule = require "commentmodule"
+
 -- local aliases for globals
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
 local TEXT_SIZE_MEDIUM = redditisfun.TEXT_SIZE_MEDIUM
@@ -168,33 +170,10 @@ function newView(Builder)
                     submission_time:setTextSize(TEXT_SIZE_SMALL)
                     submission_time:setTextColor(TEXT_COLOR_SECONDARY)
                     submission_time:setSingleLine()
-                    local submitter = Builder:addTextView("submitter")
-                    submitter:setLayoutSize("wrap_content", "wrap_content")
-                    submitter:setLayoutMarginRight("5dip")
-                    submitter:setTextSize(TEXT_SIZE_SMALL)
-                    submitter:setTextColor(TEXT_COLOR_SECONDARY)
-                    submitter:setSingleLine()
-                    local submitter_distinguished_mod = Builder:addTextView("submitter_distinguished_mod")
-                    submitter_distinguished_mod:setLayoutSize("wrap_content", "wrap_content")
-                    submitter_distinguished_mod:setVisibility("gone")
-                    submitter_distinguished_mod:setText("[M]")
-                    submitter_distinguished_mod:setTextSize(TEXT_SIZE_SMALL)
-                    submitter_distinguished_mod:setTextColor("#ff228822")
-                    submitter_distinguished_mod:setSingleLine(true)
-                    local submitter_distinguished_admin = Builder:addTextView("submitter_distinguished_admin")
-                    submitter_distinguished_admin:setLayoutSize("wrap_content", "wrap_content")
-                    submitter_distinguished_admin:setVisibility("gone")
-                    submitter_distinguished_admin:setText("[A]")
-                    submitter_distinguished_admin:setTextSize(TEXT_SIZE_SMALL)
-                    submitter_distinguished_admin:setTextColor("#ffff0011")
-                    submitter_distinguished_admin:setSingleLine(true)
-                    local submitter_distinguished_special = Builder:addTextView("submitter_distinguished_special")
-                    submitter_distinguished_special:setLayoutSize("wrap_content", "wrap_content")
-                    submitter_distinguished_special:setVisibility("gone")
-                    submitter_distinguished_special:setText("[Δ]")
-                    submitter_distinguished_special:setTextSize(TEXT_SIZE_SMALL)
-                    submitter_distinguished_special:setTextColor("#BE1337")
-                    submitter_distinguished_special:setSingleLine(true)
+
+                    local submitter = commentmodule.addSubmitterWithTags(Builder)
+                    submitter.submitter:setTextColor(TEXT_COLOR_SECONDARY)
+                    submitter.submitter:setTextStyle("normal")
                 Builder:endViewGroup()
     
             Builder:endViewGroup()
