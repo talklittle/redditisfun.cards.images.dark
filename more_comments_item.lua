@@ -1,3 +1,5 @@
+local commentmodule = require "commentmodule"
+
 -- local aliases for globals
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
 local TEXT_SIZE_MEDIUM = redditisfun.TEXT_SIZE_MEDIUM
@@ -16,22 +18,9 @@ function newView(Builder)
 	view1:setLayoutSize("fill_parent", "wrap_content")
 	view1:setOrientation("horizontal")
 	view1:setBackground(SELECTABLE_ITEM_BACKGROUND)
-		local function addIndent(viewId)
-			local left_indent = Builder:addView(viewId)
-			left_indent:setLayoutSize("1dp", "fill_parent")
-			left_indent:setLayoutMarginLeft("5dp")
-			left_indent:setLayoutMarginRight("4dp")
-			left_indent:setBackground("#ffdfdfdf")
-		end
-		
-		addIndent("left_indent1")
-		addIndent("left_indent2")
-		addIndent("left_indent3")
-		addIndent("left_indent4")
-		addIndent("left_indent5")
-		addIndent("left_indent6")
-		addIndent("left_indent7")
-		addIndent("left_indent8")
+        for i = 1,8 do
+            commentmodule.addIndent(Builder, "left_indent"..i)
+        end
 
 	    local view2 = Builder:beginLinearLayout("view2")
 	    view2:setLayoutSize("match_parent", "wrap_content")

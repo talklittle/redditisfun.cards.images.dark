@@ -39,7 +39,7 @@ function commentmodule.addIndent(Builder, viewId)
     left_indent:setLayoutSize("1dp", "fill_parent")
     left_indent:setLayoutMarginLeft("5dp")
     left_indent:setLayoutMarginRight("4dp")
-    left_indent:setBackground("#ffdfdfdf")
+    left_indent:setBackground("#2f2f2f")
 end
 
 function commentmodule.addSubmitterWithTags(Builder)
