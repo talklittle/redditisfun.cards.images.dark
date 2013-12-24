@@ -7,4 +7,6 @@ palette.TEXT_COLOR_OP = "#aaccff"
 palette.TEXT_COLOR_TITLE_CLICKED = "#aaaaff"
 palette.TEXT_COLOR_TITLE_UNCLICKED = "#ffffff"
 
+palette.FLAIR_BGCOLOR = "#404040"
+
 return palette

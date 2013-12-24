@@ -229,7 +229,7 @@ function newView(Builder)
 end
 
 local function bindTitleAndDomain(textView, Thing)
-	local flairBackgroundColor = "#dddddd"
+	local flairBackgroundColor = palette.FLAIR_BGCOLOR
 	local flairSize = TEXT_SIZE_SMALL
     local titleColor = (Thing:isStickied() and "#669900" or (Thing:isClicked() and palette.TEXT_COLOR_TITLE_CLICKED or palette.TEXT_COLOR_TITLE_UNCLICKED))
     local titleStyle = ((Thing:isClicked() and not Thing:isStickied()) and "normal" or "bold")
