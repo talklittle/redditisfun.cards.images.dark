@@ -2,9 +2,9 @@
     "id": "redditisfun.cards.images.dark",
     "name": "cards 1-column dark (ALPHA)",
     
-    "version": 2,
-    "app_version_code": 172,
-    "app_version_name": "3.1.0-beta2",
+    "version": 3,
+    "app_version_code": 173,
+    "app_version_name": "3.1.0",
     "api_level": 8,
     
     "android_theme": "Reddit_Dark",
