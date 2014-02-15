@@ -322,7 +322,8 @@ function bindView(Holder, Thing, ListItem)
 	
     -- votes
     local votes = Holder:getView("votes")
-    votes:setText(string.format(Thing:getScore()==1 and "%d point" or "%d points", Thing:getScore()))
+    local scoreInt = Thing:getScore()
+    votes:setText(string.format(scoreInt==1 and "%d point" or "%d points", scoreInt >= 0 and scoreInt or 0))
     if Thing:getLikes() == true then
     	local colorArrowRed = "#ffff8b60"
     	votes:setTextColor(colorArrowRed)
