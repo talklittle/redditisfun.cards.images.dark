@@ -274,17 +274,6 @@ function bindView(Holder, Thing, ListItem)
     local save = Holder:getView("save")
     local moreActions = Holder:getView("more_actions")
 	
-    -- set click data for clickable elements that delegate to Java
-    voteUpButton:setClickData(Thing)
-    voteDownButton:setClickData(Thing)
-    clickThreadView:setClickData(Thing)
-    share:setClickData(Thing)
-    moreActions:setClickData(Thing)
-    save:setClickData(Thing)
-    comments:setClickData(Thing)
-    -- TODO
---    Holder:getView("hide"):setClickData(Thing)
-	
 	title:setText(Thing:getTitle())
 	title:setTextStyle(Thing:isClicked() and "normal" or "bold")
     title:setTextColor(Thing:isStickied() and "#669900" or TEXT_COLOR_PRIMARY)
@@ -361,6 +350,5 @@ end
 -- @usage exported
 function onDismiss(Holder, Thing)
 	local backview = Holder:getView("swipelist_backview")
-	backview:setClickData(Thing)
 	backview:onClick("hideThread")
 end
