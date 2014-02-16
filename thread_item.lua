@@ -279,9 +279,10 @@ function bindView(Holder, Thing, ListItem)
     title:setTextColor(Thing:isStickied() and "#669900" or TEXT_COLOR_PRIMARY)
 
 	subreddit:setText(Thing:getSubreddit())
+    local thingUrl = Thing:getUrl()
 	if Thing:isIs_self() then
 		domain:setText("self")
-	elseif Thing:getUrl():sub(1, 19) == "http://imgur.com/a/" then
+	elseif thingUrl:sub(1, 19) == "http://imgur.com/a/" then
 		domain:setText("imgur album")
 	else
 		domain:setText(Thing:getDomain())
@@ -296,7 +297,7 @@ function bindView(Holder, Thing, ListItem)
 		imageView:setVisibility("gone")
 	else
 		nsfw:setVisibility("gone")
-		local imageUrl = getImageUrl(Thing:getUrl())
+		local imageUrl = getImageUrl(thingUrl)
 		if imageUrl then
 			if imageUrl ~= imageView:getTag("currentUrl") then
 				imageView:displayImageWithProgress(imageUrl, imageProgress)
@@ -311,26 +312,28 @@ function bindView(Holder, Thing, ListItem)
 	
     -- votes
     local votes = Holder:getView("votes")
-    local scoreInt = Thing:getScore()
-    votes:setText(string.format(scoreInt==1 and "%d point" or "%d points", scoreInt >= 0 and scoreInt or 0))
-    if Thing:getLikes() == true then
+    local thingScore = Thing:getScore()
+    local thingLikes = Thing:getLikes()
+    votes:setText(string.format(thingScore==1 and "%d point" or "%d points", thingScore >= 0 and thingScore or 0))
+    if thingLikes == true then
     	local colorArrowRed = "#ffff8b60"
     	votes:setTextColor(colorArrowRed)
     	voteUpButton:setDrawable(DRAWABLE_VOTE_UP_RED)
     	voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
-	elseif Thing:getLikes() == false then
+	elseif thingLikes == false then
 		local colorArrowBlue = "#ff9494ff"
 		votes:setTextColor(colorArrowBlue)
 		voteUpButton:setDrawable(DRAWABLE_VOTE_UP_GRAY)
 		voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_BLUE)
-	else -- Thing:getLikes() == nil
+	else -- thingLikes == nil
 		votes:setTextColor(TEXT_COLOR_PRIMARY)
 	    voteUpButton:setDrawable(DRAWABLE_VOTE_UP_GRAY)
 	    voteDownButton:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
 	end
 	
 	-- num comments
-	numComments:setText(string.format(Thing:getNum_comments()==1 and "%d comment" or "%d comments", Thing:getNum_comments()))
+    local thingNumComments = Thing:getNum_comments()
+	numComments:setText(string.format(thingNumComments==1 and "%d comment" or "%d comments", thingNumComments))
 	
 	-- save/unsave
 	if Thing:isSaved() then
