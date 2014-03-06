@@ -291,7 +291,8 @@ function bindView(Holder, Thing, ListItem)
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
 
-	if Thing:getThumbnail() == "nsfw" then
+    local thumbnail = Thing:getThumbnail()
+    if thumbnail == "nsfw" or ((thumbnail == "" or thumbnail == nil) and Thing:isOver_18() and not ListItem:isBrowsingOver18Subreddit()) then
 		nsfw:setVisibility("visible")
 		imageView:cancelDisplayImage()
 		imageView:setVisibility("gone")
