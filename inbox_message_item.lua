@@ -96,6 +96,7 @@ function newView(Builder)
 					body:setTextSize(TEXT_SIZE_BODY)
 					body:setTextColor(TEXT_COLOR_PRIMARY)
 					body:setLinksClickable(true)
+                    body:setHasContextMenu(true)
                 Builder:endLinearLayout()
                 
             Builder:endFrameLayout()
@@ -241,8 +242,6 @@ local function bindViewCommon(Holder, Thing, ListItem)
 		bodyView:setText(Thing:getBody())
 	end
 	bodyView:setMovementMethod("LinkMovementMethod")
-	bodyView:setClickable(true)
-	bodyView:setLongClickable(false)
 
 	local topLineTextColor = Thing:isNew() and TEXT_COLOR_NEW or TEXT_COLOR_OLD
 	fromUserView:setTextColor(topLineTextColor)
