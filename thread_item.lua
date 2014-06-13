@@ -79,8 +79,8 @@ function newView(Builder)
 				        local subtitle_row = Builder:beginLinearLayout("subtitle_row")
 				        subtitle_row:setLayoutSize("fill_parent", "wrap_content")
 				        subtitle_row:setLayoutMarginLeft("16dp")
-				        subtitle_row:setLayoutMarginRight("16dp")
 				        subtitle_row:setOrientation("horizontal")
+                        subtitle_row:setGravity("center_vertical")
 	
 					        local votes = Builder:addTextView("votes")
 					        votes:setLayoutSize("wrap_content", "wrap_content")
@@ -99,8 +99,25 @@ function newView(Builder)
 					        num_comments:setText("10000 comments")
 					        num_comments:setTextColor(TEXT_COLOR_SECONDARY)
 					        num_comments:setTextSize("14sp")
-					        
-				        Builder:endLinearLayout()
+
+                            local and_text2 = Builder:addTextView("and_text2")
+                            and_text2:setLayoutSize("0dp", "wrap_content")
+                            and_text2:setLayoutWeight(1.0)
+
+                            local clock_symbol = Builder:addTextView("clock_symbol")
+                            clock_symbol:setLayoutSize("wrap_content", "wrap_content")
+                            clock_symbol:setTextColor(TEXT_COLOR_SECONDARY)
+                            clock_symbol:setTextSize("11sp")
+                            clock_symbol:setText("⌚")
+
+                            local submission_time = Builder:addTextView("submission_time")
+                            submission_time:setLayoutSize("wrap_content", "wrap_content")
+                            submission_time:setTextColor(TEXT_COLOR_SECONDARY)
+                            submission_time:setTextSize("14sp")
+                            submission_time:setPaddingLeft("4dp")
+                            submission_time:setPaddingRight("4dp")
+
+                        Builder:endLinearLayout()
 				        
 				        local more_info_row = Builder:beginLinearLayout("more_info_row")
 				        more_info_row:setLayoutSize("fill_parent", "wrap_content")
@@ -275,6 +292,7 @@ function bindView(Holder, Thing, ListItem)
 	local subreddit = Holder:getView("subreddit")
 	local domain = Holder:getView("domain")
     local numComments = Holder:getView("num_comments")
+    local submissionTime = Holder:getView("submission_time")
     local linkFlair = Holder:getView("link_flair")
     local clickThreadView = Holder:getView("click_thread_frame")
     local voteUpButton = Holder:getView("vote_up_button")
@@ -351,7 +369,20 @@ function bindView(Holder, Thing, ListItem)
 	-- num comments
     local thingNumComments = Thing:getNum_comments()
 	numComments:setText(string.format(thingNumComments==1 and "%d comment" or "%d comments", thingNumComments))
-	
+
+    local createdTimeAgo = Thing:getCreatedTimeAgo()
+    createdTimeAgo = createdTimeAgo:gsub("very recently", "now")
+    createdTimeAgo = createdTimeAgo:gsub("s ago", " ago")
+    createdTimeAgo = createdTimeAgo:gsub(" ago", "")
+    createdTimeAgo = createdTimeAgo:gsub("second", "s")
+    createdTimeAgo = createdTimeAgo:gsub("minute", "min")
+    createdTimeAgo = createdTimeAgo:gsub("hour", "hr")
+    createdTimeAgo = createdTimeAgo:gsub("day", "d")
+    createdTimeAgo = createdTimeAgo:gsub("week", "wk")
+    createdTimeAgo = createdTimeAgo:gsub("month", "mo")
+    createdTimeAgo = createdTimeAgo:gsub("year", "yr")
+    submissionTime:setText(createdTimeAgo)
+
 	-- save/unsave
 	if Thing:isSaved() then
 		save:setDrawable(DRAWABLE_UNSAVE)
