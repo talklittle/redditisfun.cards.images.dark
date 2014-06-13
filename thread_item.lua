@@ -90,7 +90,7 @@ function newView(Builder)
 					        
 					        local and_text = Builder:addTextView("and_text")
 					        and_text:setLayoutSize("wrap_content", "wrap_content")
-					        and_text:setText(" and ")
+					        and_text:setText(" · ")
 					        and_text:setTextColor(TEXT_COLOR_SECONDARY)
 					        and_text:setTextSize("14sp")
 					        
