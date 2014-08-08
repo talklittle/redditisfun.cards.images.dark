@@ -28,7 +28,7 @@ function newView(Builder)
 	view1:setOrientation("horizontal")
 	view1:setOnClick("onListItemClick")
 	view1:setBackground(SELECTABLE_ITEM_BACKGROUND)
-        for i = 1,8 do
+        for i = 1,10 do
             commentmodule.addIndent(Builder, "left_indent"..i)
         end
 
@@ -229,7 +229,7 @@ function bindView(Holder, Thing, ListItem)
 
 	-- indentation
     local thingNestingLevel = Thing:getNestingLevel()
-	for i = 1,8 do
+	for i = 1,10 do
 	    Holder:getView("left_indent" .. i):setVisible(thingNestingLevel >= i)
 	end
 	

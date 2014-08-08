@@ -22,7 +22,7 @@ function newView(Builder)
     local view1 = Builder:beginLinearLayout("view1")
     view1:setLayoutSize("fill_parent", "wrap_content")
     view1:setOrientation("horizontal")
-        for i = 1,8 do
+        for i = 1,10 do
             commentmodule.addIndent(Builder, "left_indent"..i)
         end
         
@@ -191,7 +191,7 @@ local function bindViewCommon(Holder, Thing, ListItem)
 	
 	-- indentation
     local thingNestingLevel = Thing:getNestingLevel()
-	for i = 1,8 do
+	for i = 1,10 do
 	    Holder:getView("left_indent" .. i):setVisible(thingNestingLevel >= i)
 	end
     
@@ -256,7 +256,7 @@ end
 function bindViewMessage(Holder, Thing, ListItem)
 	-- indentation
     local thingNestingLevel = Thing:getNestingLevel()
-	for i = 1,8 do
+	for i = 1,10 do
 	    Holder:getView("left_indent" .. i):setVisible(thingNestingLevel >= i)
 	end
     
