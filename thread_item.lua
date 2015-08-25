@@ -10,6 +10,9 @@ local Spans = redditisfun.Spans
 local Toasts = redditisfun.Toasts
 local SWIPE_MODE_BOTH = redditisfun.SWIPE_MODE_BOTH
 
+local MATCH_PARENT = "-1"  -- string for backwards compatibility app v3.7.1 and earlier
+local WRAP_CONTENT = "-2"  -- string for backwards compatibility app v3.7.1 and earlier
+
 -- drawables
 local DRAWABLE_UNSAVE = "btn_star_on_normal_holo_dark.png"
 local DRAWABLE_SAVE = "btn_star_off_normal_holo_dark.png"
@@ -288,12 +291,14 @@ function bindView(Holder, Thing, ListItem)
 
 	local imageView = Holder:getView("image")
 	local imageProgress = Holder:getView("image_progress")
+	local imageFrame = Holder:getView("image_frame")
 
-    local thumbnail = Thing:getThumbnail()
-    if thumbnail == "nsfw" or ((thumbnail == "" or thumbnail == nil) and Thing:isOver_18() and not ListItem:isBrowsingOver18Subreddit()) then
+	local thumbnail = Thing:getThumbnail()
+	if thumbnail == "nsfw" or ((thumbnail == "" or thumbnail == nil) and Thing:isOver_18() and not ListItem:isBrowsingOver18Subreddit()) then
 		nsfw:setVisibility("visible")
 		imageView:cancelDisplayImage()
 		imageView:setVisibility("gone")
+		imageFrame:setLayoutHeight(WRAP_CONTENT)
 	else
 		nsfw:setVisibility("gone")
 		local imageUrl = thumbnails.getImageUrl(thingUrl)
@@ -301,11 +306,24 @@ function bindView(Holder, Thing, ListItem)
 			if imageUrl ~= imageView:getTag("currentUrl") then
 				imageView:displayImageWithProgress(imageUrl, imageProgress)
 				imageView:setTag("currentUrl", imageUrl)
+
+				local imageFrameWidth = clickThreadView:getWidth()
+
+				if imageFrameWidth > 0 then
+					local methodExists, dimenString = pcall(Thing.getPreviewImageSourceDimensions, Thing)
+					if methodExists and dimenString ~= nil then
+						local xIndex = dimenString:find("x")
+						local previewImageWidth = tonumber(dimenString:sub(1, xIndex - 1))
+						local previewImageHeight = tonumber(dimenString:sub(xIndex + 1))
+						imageFrame:setLayoutHeight(imageFrameWidth * previewImageHeight / previewImageWidth)
+					end
+				end
 			end
 		else
 			imageView:cancelDisplayImage()
 			imageView:setVisibility("gone")
 			imageProgress:setVisibility("gone")
+			imageFrame:setLayoutHeight(WRAP_CONTENT)
 		end
 	end
 	
