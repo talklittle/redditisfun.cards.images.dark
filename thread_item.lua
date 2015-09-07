@@ -317,8 +317,16 @@ function bindView(Holder, Thing, ListItem)
 						local previewImageWidth = tonumber(dimenString:sub(1, xIndex - 1))
 						local previewImageHeight = tonumber(dimenString:sub(xIndex + 1))
 						local calculatedHeight = imageFrameWidth * previewImageHeight / previewImageWidth
-						imageFrame:setLayoutHeight(calculatedHeight)
-						imageView:setLayoutSize(tostring(imageFrameWidth), tostring(calculatedHeight))
+
+						-- ensure integer, for app v3.7.5 and older
+						local calculatedHeightString = tostring(calculatedHeight)
+						local decimalIndex = calculatedHeightString:find("%.")
+						if decimalIndex ~= nil then
+							calculatedHeightString = calculatedHeightString:sub(1, decimalIndex - 1)
+						end
+
+						imageFrame:setLayoutHeight(calculatedHeightString)
+						imageView:setLayoutSize(tostring(imageFrameWidth), calculatedHeightString)
 					else
 						imageView:setLayoutSize("fill_parent", "wrap_content")
 					end
