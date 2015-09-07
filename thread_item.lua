@@ -316,7 +316,11 @@ function bindView(Holder, Thing, ListItem)
 						local xIndex = dimenString:find("x")
 						local previewImageWidth = tonumber(dimenString:sub(1, xIndex - 1))
 						local previewImageHeight = tonumber(dimenString:sub(xIndex + 1))
-						imageFrame:setLayoutHeight(imageFrameWidth * previewImageHeight / previewImageWidth)
+						local calculatedHeight = imageFrameWidth * previewImageHeight / previewImageWidth
+						imageFrame:setLayoutHeight(calculatedHeight)
+						imageView:setLayoutSize(imageFrameWidth, calculatedHeight)
+					else
+						imageView:setLayoutSize("fill_parent", "wrap_content")
 					end
 				end
 			end
