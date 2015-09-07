@@ -32,6 +32,10 @@ function thumbnails.getImageUrl(url)
 end
 
 local methodExists, showThumbnails = pcall(redditisfun.isShowThumbnails, redditisfun)
-thumbnails.enabled = (methodExists and showThumbnails)
+if methodExists then
+    thumbnails.enabled = showThumbnails
+else
+    thumbnails.enabled = true
+end
 
 return thumbnails
