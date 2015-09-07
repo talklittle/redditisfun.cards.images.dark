@@ -12,9 +12,9 @@ function thumbnails.getImageUrl(url)
     -- 4-char extensions (.jpeg, .gifv)
     local last5 = pathLower:sub(-5)
 
-    if u.host:sub(1, 12) == "imgur.com/a/" then
+    if u.host == "imgur.com" and u.path:sub(1, 3) == "/a/" then
         return url
-    elseif u.host:sub(1, 18) == "imgur.com/gallery/" then
+    elseif u.host == "imgur.com" and u.path:sub(1, 9) == "/gallery/" then
         return nil
     elseif u.host == "i.imgur.com" or u.host == "imgur.com" then
         if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
