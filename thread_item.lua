@@ -299,6 +299,7 @@ function bindView(Holder, Thing, ListItem)
 		imageView:cancelDisplayImage()
 		imageView:setVisibility("gone")
 		imageFrame:setLayoutHeight(WRAP_CONTENT)
+		imageProgress:setVisibility("gone")
 	else
 		nsfw:setVisibility("gone")
 		local imageUrl = thumbnails.getImageUrl(thingUrl)
