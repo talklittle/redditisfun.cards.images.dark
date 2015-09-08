@@ -2,7 +2,7 @@
 --
 -- Bertrand Mansion, 2011-2013; License MIT
 -- @module neturl
--- @alias	M
+-- @alias    M
 
 local M = {}
 M.version = "0.9.0"

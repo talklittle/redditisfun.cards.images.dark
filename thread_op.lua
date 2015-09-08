@@ -187,31 +187,31 @@ function newView(Builder)
             local frame = Builder:beginFrameLayout()
             frame:setLayoutSize("wrap_content", "fill_parent")
             frame:setBackground(THUMBNAIL_BGCOLOR)
-            	local frame = Builder:beginFrameLayout("thumbnail_frame")
-            	frame:setLayoutSize("wrap_content", "fill_parent")
-            	frame:setBackground(SELECTABLE_ITEM_BACKGROUND)
-            	frame:setOnClick("clickThumbnail")
-            	
-	                local image = Builder:addImageView("thumbnail_image")
-	                image:setLayoutSize("70dp", "70dp")
-	                
-	                local lin = Builder:beginLinearLayout("thumbnail_icon_frame")
-	                lin:setOrientation("vertical")
-	                lin:setLayoutSize("70dp", "70dp")
-	                lin:setVisibility("gone")
-	                lin:setGravity("center")
-		            	local image = Builder:addImageView("thumbnail_icon")
-		            	image:setLayoutSize("32dp", "32dp")
-		            	
-		            	local label = Builder:addTextView("thumbnail_icon_label")
-		            	label:setLayoutSize("wrap_content", "wrap_content")
-		            	label:setTextSize("12sp")
-	            	Builder:endLinearLayout()
-	    
-	                local progressBar = Builder:addProgressBar("thumbnail_progress")
-	                progressBar:setLayoutSize("70dp", "70dp")
-	                progressBar:setIndeterminate()
-	                progressBar:setVisibility("gone")
+                local frame = Builder:beginFrameLayout("thumbnail_frame")
+                frame:setLayoutSize("wrap_content", "fill_parent")
+                frame:setBackground(SELECTABLE_ITEM_BACKGROUND)
+                frame:setOnClick("clickThumbnail")
+                
+                    local image = Builder:addImageView("thumbnail_image")
+                    image:setLayoutSize("70dp", "70dp")
+                    
+                    local lin = Builder:beginLinearLayout("thumbnail_icon_frame")
+                    lin:setOrientation("vertical")
+                    lin:setLayoutSize("70dp", "70dp")
+                    lin:setVisibility("gone")
+                    lin:setGravity("center")
+                        local image = Builder:addImageView("thumbnail_icon")
+                        image:setLayoutSize("32dp", "32dp")
+                        
+                        local label = Builder:addTextView("thumbnail_icon_label")
+                        label:setLayoutSize("wrap_content", "wrap_content")
+                        label:setTextSize("12sp")
+                    Builder:endLinearLayout()
+        
+                    local progressBar = Builder:addProgressBar("thumbnail_progress")
+                    progressBar:setLayoutSize("70dp", "70dp")
+                    progressBar:setIndeterminate()
+                    progressBar:setVisibility("gone")
                 Builder:endFrameLayout()
             Builder:endFrameLayout()
         Builder:endViewGroup()
@@ -239,61 +239,61 @@ function newView(Builder)
 end
 
 local function bindTitleAndDomain(textView, Thing)
-	local flairBackgroundColor = palette.FLAIR_BGCOLOR
-	local flairSize = TEXT_SIZE_SMALL
+    local flairBackgroundColor = palette.FLAIR_BGCOLOR
+    local flairSize = TEXT_SIZE_SMALL
     local titleColor = (Thing:isStickied() and "#669900" or (Thing:isClicked() and palette.TEXT_COLOR_TITLE_CLICKED or palette.TEXT_COLOR_TITLE_UNCLICKED))
     local titleStyle = ((Thing:isClicked() and not Thing:isStickied()) and "normal" or "bold")
-	local domainColor = "#7f7f7f"
-	local domainSize = TEXT_SIZE_SMALL
-	
-	-- link flair
+    local domainColor = "#7f7f7f"
+    local domainSize = TEXT_SIZE_SMALL
+    
+    -- link flair
     local thingLinkFlairText = Thing:getLink_flair_text()
-	local hasFlair = thingLinkFlairText and "" ~= thingLinkFlairText
-	local flairBuilder
-	if hasFlair then
-		flairBuilder = Spans:addSize(thingLinkFlairText, flairSize)
-		flairBuilder = Spans:addBackgroundColor(flairBuilder, flairBackgroundColor)
-	else
-		flairBuilder = Spans:builder()  -- empty SpannableStringBuilder
-	end
+    local hasFlair = thingLinkFlairText and "" ~= thingLinkFlairText
+    local flairBuilder
+    if hasFlair then
+        flairBuilder = Spans:addSize(thingLinkFlairText, flairSize)
+        flairBuilder = Spans:addBackgroundColor(flairBuilder, flairBackgroundColor)
+    else
+        flairBuilder = Spans:builder()  -- empty SpannableStringBuilder
+    end
     
     -- title
     local titleBuilder = Spans:addColor(Thing:getTitle(), titleColor)
     titleBuilder = Spans:addStyle(titleBuilder, titleStyle)
     
     -- domain
-	local domainBuilder = Spans:addColor("(" .. Thing:getDomain() .. ")", domainColor)
-	domainBuilder = Spans:addSize(domainBuilder, domainSize)
-	
-	-- combine
-	textView:setText(flairBuilder:append(hasFlair and " " or ""):append(titleBuilder):append(" "):append(domainBuilder))
+    local domainBuilder = Spans:addColor("(" .. Thing:getDomain() .. ")", domainColor)
+    domainBuilder = Spans:addSize(domainBuilder, domainSize)
+    
+    -- combine
+    textView:setText(flairBuilder:append(hasFlair and " " or ""):append(titleBuilder):append(" "):append(domainBuilder))
 end
 
 local function getDefaultThumbnail(thumbnailUrl)
-	if not thumbnailUrl then
-		return nil
-	elseif thumbnailUrl:sub(-7) == "default" then
-		return DRAWABLE_THUMBNAIL_DEFAULT
-	elseif thumbnailUrl:sub(-4) == "nsfw" then
-		return DRAWABLE_THUMBNAIL_NSFW
-	elseif thumbnailUrl:sub(-4) == "self" then
-		return DRAWABLE_THUMBNAIL_SELF
-	end
+    if not thumbnailUrl then
+        return nil
+    elseif thumbnailUrl:sub(-7) == "default" then
+        return DRAWABLE_THUMBNAIL_DEFAULT
+    elseif thumbnailUrl:sub(-4) == "nsfw" then
+        return DRAWABLE_THUMBNAIL_NSFW
+    elseif thumbnailUrl:sub(-4) == "self" then
+        return DRAWABLE_THUMBNAIL_SELF
+    end
 end
 
 ---
 -- get the label text for image links
 local function getImageLabelText(urlLower)
-	local last4 = urlLower:sub(-4)
-	if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
-		return last4:sub(2)
-	elseif urlLower:sub(-5) == ".jpeg" then
-		return "jpg"
-	elseif urlLower:sub(1, 17) == "http://imgur.com/" or urlLower:sub(1, 19) == "http://i.imgur.com/" then
-		return "imgur"
-	else
-		return nil
-	end
+    local last4 = urlLower:sub(-4)
+    if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
+        return last4:sub(2)
+    elseif urlLower:sub(-5) == ".jpeg" then
+        return "jpg"
+    elseif urlLower:sub(1, 17) == "http://imgur.com/" or urlLower:sub(1, 19) == "http://i.imgur.com/" then
+        return "imgur"
+    else
+        return nil
+    end
 end
 
 ---
@@ -310,86 +310,86 @@ function bindView(Holder, Thing, ListItem)
     local thingLikes = Thing:getLikes()
     votes:setText(tostring(thingScore >= 0 and thingScore or 0))
     if thingLikes == true then
-    	local colorArrowRed = "#ffff8b60"
-    	votes:setTextColor(colorArrowRed)
-    	upArrow:setDrawable(DRAWABLE_VOTE_UP_RED)
-    	downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
-	elseif thingLikes == false then
-		local colorArrowBlue = "#ff9494ff"
-		votes:setTextColor(colorArrowBlue)
-		upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
-		downArrow:setDrawable(DRAWABLE_VOTE_DOWN_BLUE)
-	else -- thingLikes == nil
-		local colorArrowGray = "#ffc0c0c0"
-		votes:setTextColor(colorArrowGray)
-	    upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
-	    downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
-	end
-	
-	local num_reports = Holder:getView("num_reports")
+        local colorArrowRed = "#ffff8b60"
+        votes:setTextColor(colorArrowRed)
+        upArrow:setDrawable(DRAWABLE_VOTE_UP_RED)
+        downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
+    elseif thingLikes == false then
+        local colorArrowBlue = "#ff9494ff"
+        votes:setTextColor(colorArrowBlue)
+        upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
+        downArrow:setDrawable(DRAWABLE_VOTE_DOWN_BLUE)
+    else -- thingLikes == nil
+        local colorArrowGray = "#ffc0c0c0"
+        votes:setTextColor(colorArrowGray)
+        upArrow:setDrawable(DRAWABLE_VOTE_UP_GRAY)
+        downArrow:setDrawable(DRAWABLE_VOTE_DOWN_GRAY)
+    end
+    
+    local num_reports = Holder:getView("num_reports")
     local thingNumReports = Thing:getNum_reports()
-	local hasReports = thingNumReports ~= nil and thingNumReports > 0
-	num_reports:setVisible(hasReports)
-	if hasReports then
-		num_reports:setText(string.format(thingNumReports==1 and "%d report" or "%d reports", thingNumReports))
-	end
+    local hasReports = thingNumReports ~= nil and thingNumReports > 0
+    num_reports:setVisible(hasReports)
+    if hasReports then
+        num_reports:setText(string.format(thingNumReports==1 and "%d report" or "%d reports", thingNumReports))
+    end
 
     local thingNumComments = Thing:getNum_comments()
-	Holder:getView("nsfw"):setVisible(Thing:isOver_18())
-	Holder:getView("num_comments"):setText(string.format(thingNumComments==1 and "%d comment" or "%d comments", thingNumComments))
-	Holder:getView("subreddit"):setText(Thing:getSubreddit())
-	Holder:getView("submission_time"):setText(Thing:getCreatedTimeAgo())
-	Holder:getView("submitter"):setText("by "..Thing:getAuthor())
-	Holder:getView("submitter_distinguished_mod"):setVisible(Thing:isModerator())
-	Holder:getView("submitter_distinguished_admin"):setVisible(Thing:isAdmin())
-	Holder:getView("submitter_distinguished_special"):setVisible(Thing:isSpecialAdmin())
-	
-	-- thumbnail
-	local thumbnail = Holder:getView("thumbnail_image")
-	local thumbnail_icon_frame = Holder:getView("thumbnail_icon_frame")
-	local thumbnail_icon = Holder:getView("thumbnail_icon")
-	local thumbnail_icon_label = Holder:getView("thumbnail_icon_label")
-	local thumbnail_progress = Holder:getView("thumbnail_progress")
+    Holder:getView("nsfw"):setVisible(Thing:isOver_18())
+    Holder:getView("num_comments"):setText(string.format(thingNumComments==1 and "%d comment" or "%d comments", thingNumComments))
+    Holder:getView("subreddit"):setText(Thing:getSubreddit())
+    Holder:getView("submission_time"):setText(Thing:getCreatedTimeAgo())
+    Holder:getView("submitter"):setText("by "..Thing:getAuthor())
+    Holder:getView("submitter_distinguished_mod"):setVisible(Thing:isModerator())
+    Holder:getView("submitter_distinguished_admin"):setVisible(Thing:isAdmin())
+    Holder:getView("submitter_distinguished_special"):setVisible(Thing:isSpecialAdmin())
+    
+    -- thumbnail
+    local thumbnail = Holder:getView("thumbnail_image")
+    local thumbnail_icon_frame = Holder:getView("thumbnail_icon_frame")
+    local thumbnail_icon = Holder:getView("thumbnail_icon")
+    local thumbnail_icon_label = Holder:getView("thumbnail_icon_label")
+    local thumbnail_progress = Holder:getView("thumbnail_progress")
     local thingThumbnail = Thing:getThumbnail()
-	local defaultThumbnail = getDefaultThumbnail(thingThumbnail)
-	if defaultThumbnail then
-		thumbnail:setVisibility("visible")
-		thumbnail_icon_frame:setVisibility("gone")
-		thumbnail:setDrawable(defaultThumbnail)
-	elseif thingThumbnail == "" then
-		if Thing:isIs_self() then
-			thumbnail:setVisibility("visible")
-			thumbnail_icon_frame:setVisibility("gone")
-			thumbnail:setDrawable(DRAWABLE_THUMBNAIL_SELF)
-		else	
-			thumbnail:setVisibility("gone")
-			thumbnail_icon_frame:setVisibility("visible")
-			local urlLower = Thing:getUrl():lower()
-			local imageLabelText = getImageLabelText(urlLower)
-			if imageLabelText then
-				thumbnail_icon:setDrawable(DRAWABLE_IMAGE_LINK)
-				thumbnail_icon_label:setVisibility("visible")
-				thumbnail_icon_label:setText(imageLabelText)
-			else
-				thumbnail_icon:setDrawable(DRAWABLE_WEB_LINK)
-				
-				local isReddit =
-					urlLower:sub(1, 18) == "http://reddit.com/" or
-					urlLower:sub(1, 15) == "http://redd.it/" or
-					urlLower:find("http://[^./]+%.reddit%.com/") ~= nil
-				
-				if isReddit then
-					thumbnail_icon_label:setVisibility("visible")
-					thumbnail_icon_label:setText("reddit")
-				else					
-					thumbnail_icon_label:setVisibility("gone")
-				end
-			end
-		end
-	else
-		thumbnail_icon_frame:setVisibility("gone")
-		-- displayThumbnailImageWithProgress will handle visibility of thumbnail and thumbnail_progress
-		thumbnail:displayThumbnailImageWithProgress(thingThumbnail, thumbnail_progress)
+    local defaultThumbnail = getDefaultThumbnail(thingThumbnail)
+    if defaultThumbnail then
+        thumbnail:setVisibility("visible")
+        thumbnail_icon_frame:setVisibility("gone")
+        thumbnail:setDrawable(defaultThumbnail)
+    elseif thingThumbnail == "" then
+        if Thing:isIs_self() then
+            thumbnail:setVisibility("visible")
+            thumbnail_icon_frame:setVisibility("gone")
+            thumbnail:setDrawable(DRAWABLE_THUMBNAIL_SELF)
+        else    
+            thumbnail:setVisibility("gone")
+            thumbnail_icon_frame:setVisibility("visible")
+            local urlLower = Thing:getUrl():lower()
+            local imageLabelText = getImageLabelText(urlLower)
+            if imageLabelText then
+                thumbnail_icon:setDrawable(DRAWABLE_IMAGE_LINK)
+                thumbnail_icon_label:setVisibility("visible")
+                thumbnail_icon_label:setText(imageLabelText)
+            else
+                thumbnail_icon:setDrawable(DRAWABLE_WEB_LINK)
+                
+                local isReddit =
+                    urlLower:sub(1, 18) == "http://reddit.com/" or
+                    urlLower:sub(1, 15) == "http://redd.it/" or
+                    urlLower:find("http://[^./]+%.reddit%.com/") ~= nil
+                
+                if isReddit then
+                    thumbnail_icon_label:setVisibility("visible")
+                    thumbnail_icon_label:setText("reddit")
+                else                    
+                    thumbnail_icon_label:setVisibility("gone")
+                end
+            end
+        end
+    else
+        thumbnail_icon_frame:setVisibility("gone")
+        -- displayThumbnailImageWithProgress will handle visibility of thumbnail and thumbnail_progress
+        thumbnail:displayThumbnailImageWithProgress(thingThumbnail, thumbnail_progress)
     end
 
     -- flair
@@ -417,14 +417,14 @@ function bindView(Holder, Thing, ListItem)
     local thingRenderedSelftext = Thing:getRenderedSelftext()
     local thingSelftext = Thing:getSelftext()
     if thingRenderedSelftext then
-		-- TODO catch ArrayIndexOutOfBoundsException
-		-- JellyBean bug http://code.google.com/p/android/issues/detail?id=34872
-		selftext:setText(thingRenderedSelftext)
-	else
-		selftext:setText(thingSelftext)
-	end
-	selftext:setVisible(thingSelftext and "" ~= thingSelftext)
-	selftext:setMovementMethod("LinkMovementMethod")
-	
+        -- TODO catch ArrayIndexOutOfBoundsException
+        -- JellyBean bug http://code.google.com/p/android/issues/detail?id=34872
+        selftext:setText(thingRenderedSelftext)
+    else
+        selftext:setText(thingSelftext)
+    end
+    selftext:setVisible(thingSelftext and "" ~= thingSelftext)
+    selftext:setMovementMethod("LinkMovementMethod")
+    
 end
 
