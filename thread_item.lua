@@ -31,6 +31,7 @@ local DRAWABLE_IMAGE_LINK = "content_picture_holo_dark.png"
 local DRAWABLE_WEB_LINK = "location_web_site_holo_dark.png"
 
 local thumbnails = require "thumbnails"
+local neturl = require "neturl"
 
 ---
 -- @usage exported
@@ -281,10 +282,13 @@ function bindView(Holder, Thing, ListItem)
 
     subreddit:setText(Thing:getSubreddit())
     local thingUrl = Thing:getUrl()
+    local thingU = neturl.parse(thingUrl)
     if Thing:isIs_self() then
         domain:setText("self")
-    elseif thingUrl:sub(1, 19) == "http://imgur.com/a/" then
+    elseif thingU.host == "imgur.com" and thingU.path:sub(1, 3) == "/a/" then
         domain:setText("imgur album")
+    elseif thingU.host == "imgur.com" and thingU.path:sub(1, 9) == "/gallery/" then
+        domain:setText("imgur gallery")
     else
         domain:setText(Thing:getDomain())
     end

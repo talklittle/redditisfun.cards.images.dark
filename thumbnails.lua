@@ -12,8 +12,17 @@ function thumbnails.getImageUrl(url)
     -- 4-char extensions (.jpeg, .gifv)
     local last5 = pathLower:sub(-5)
 
-    if u.host == "imgur.com" and (u.path:sub(1, 3) == "/a/" or u.path:sub(1, 9) == "/gallery/") then
+    if u.host == "imgur.com" and u.path:sub(1, 3) == "/a/" then
         return url
+    elseif u.host == "imgur.com" and u.path:sub(1, 9) == "/gallery/" then
+        -- image hash is length 7
+        local galleryImageHash = string.match(u.path:sub(10), '[0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z][0-9A-Za-z]')
+        if galleryImageHash then
+            return "http://i.imgur.com/" .. galleryImageHash .. "l.jpg"
+        else
+            -- let Java side handle it
+            return url
+        end
     elseif u.host == "i.imgur.com" or u.host == "imgur.com" then
         if last4 == ".jpg" or last4 == ".gif" or last4 == ".png" then
             return url:sub(1, -5) .. "l.jpg"
