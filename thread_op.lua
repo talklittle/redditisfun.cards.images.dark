@@ -5,6 +5,7 @@ local palette = require "palette"
 local TEXT_SIZE_LARGE = redditisfun.TEXT_SIZE_LARGE
 local TEXT_SIZE_MEDIUM = redditisfun.TEXT_SIZE_MEDIUM
 local TEXT_SIZE_SMALL = redditisfun.TEXT_SIZE_SMALL
+local TEXT_COLOR_PRIMARY = redditisfun.TEXT_COLOR_PRIMARY
 local TEXT_COLOR_SECONDARY = redditisfun.TEXT_COLOR_SECONDARY
 local SELECTABLE_ITEM_BACKGROUND = redditisfun.SELECTABLE_ITEM_BACKGROUND
 local Fonts = redditisfun.Fonts
@@ -240,6 +241,7 @@ function newView(Builder)
         selftext:setBackground("selftext_border.9.png")
         selftext:setPadding("8dp")
         selftext:setTextSize(TEXT_SIZE_BODY)
+        selftext:setTextColor(TEXT_COLOR_PRIMARY)
         selftext:setOnClick("onListItemClick")
         selftext:setClickable(true)
         selftext:setLinksClickable(true)
