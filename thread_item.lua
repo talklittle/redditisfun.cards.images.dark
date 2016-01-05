@@ -395,13 +395,7 @@ end
 
 ---
 -- @usage exported
-function onChangeSwipeMode(Thing)
-    return SWIPE_MODE_BOTH
-end
-
----
--- @usage exported
-function onDismiss(Holder, Thing)
+function onSwiped(Holder, Thing, Direction)
     local backview = Holder:getView("swipelist_backview")
     backview:onClick("hideThread")
 end
