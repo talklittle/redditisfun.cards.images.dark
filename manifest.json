@@ -9,10 +9,6 @@
 
   "android_theme": "Reddit_Dark",
 
-  "app_bar_color": "#ff212121",
-  "status_bar_color": "#ff000000",
-  "tab_indicator_color": "#ffaadff1",
-
   "ad_placement": "bottom",
 
   "scripts": {
